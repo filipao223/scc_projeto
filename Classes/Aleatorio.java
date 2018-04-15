@@ -1,15 +1,16 @@
-// Classe para gerao de nmeros aleatrios segundos vrias distribuies
-// Apenas a distribuio exponencial negativa est definida
+package scc;
 
+// Classe para gera��o de n�meros aleat�rios segundos v�rias distribui��es
+// Apenas a distribui��o exponencial negativa est� definida
 public class Aleatorio {
 
-    private double vals_x2[] = new double[8];
+    private static double vals_x2[] = new double[8];
     // Gera um numero segundo uma distribuio exponencial negativa de media m
     static double exponencial (double m){
 		return (-m*Math.log(Math.random()));
 	}
 
-	protected double normal (int stream, double m, int dp){
+	static double normal (int stream, double m, int dp){
         double u1, u2;
         double v1=0, v2=0, w=2;
         double y1, y2;
@@ -35,19 +36,19 @@ public class Aleatorio {
 
         //Procura x2 já existente
         for(int i=0; i<8; i+=2){
-            if(this.vals_x2[i] == stream && this.vals_x2[i+1] >= 0){
+            if(vals_x2[i] == stream && vals_x2[i+1] >= 0){
                 //Devolve o x2
                 double temp = x2;
-                this.vals_x2[i+1] = -1;
+                vals_x2[i+1] = -1;
                 return temp;
             }
         }
 
         //Guarda x2
         for(int i=0; i<8; i+=2){
-            if(this.vals_x2[i] < 0){
-                this.vals_x2[i] = stream;
-                this.vals_x2[i+1] = x2;
+            if(vals_x2[i] < 0){
+                vals_x2[i] = stream;
+                vals_x2[i+1] = x2;
             }
         }
 

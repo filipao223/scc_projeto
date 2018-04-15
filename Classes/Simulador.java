@@ -1,96 +1,111 @@
+package scc;
+
 public class Simulador {
 
- 	// Relógio de simulação - variável que contém o valor do tempo em cada instante
+    // Relï¿½gio de simulaï¿½ï¿½o - variï¿½vel que contï¿½m o valor do tempo em cada instante
     private double instante;
-    // Médias das distribuições de chegadas e de atendimento no serviço
-	private double media_cheg, media_serv;
-	// Número de clientes que vão ser atendidos
-	private int n_clientes;
-	//Desvio padrao
-    private int desv_padr_empres;
-    private int desv_padr_cliente;
-	// Serviço - pode haver mais do que um num simulador
-    private Servico servicoGeral;
-    private Servico servicoEmpresa;
-    // Lista de eventos - onde ficam registados todos os eventos que vão ocorrer na simulação
-    // Cada simulador só tem uma
-	private ListaEventos lista;
+    // Mï¿½dias das distribuiï¿½ï¿½es de chegadas e de atendimento no serviï¿½o
+    private double media_cheg_empresariais, media_cheg_geral, media_serv_empresariais, media_serv_geral;
+    // Nï¿½mero de clientes que vï¿½o ser atendidos
+    private int n_clientes;
+    // Serviï¿½o - pode haver mais do que um num simulador
+    private static Servico servicoEmpresarial;
+    private static Servico servicoGeral;
+    // Lista de eventos - onde ficam registados todos os eventos que vï¿½o ocorrer na simulaï¿½ï¿½o
+    // Cada simulador sï¿½ tem uma
+    private ListaEventos lista;
 
     // Construtor
     public Simulador() {
-		// Inicialização de parâmetros do simulador
-        media_cheg = 1;
-		media_serv = 1.5;
-		n_clientes = 100;
-		desv_padr_empres = 4;
-		desv_padr_cliente = 8;
-		// Inicialização do relógio de simulação
-		instante = 0;
-		// Criação do serviço
-		servicoGeral = new Servico (this);
-		servicoEmpresa = new Servico(this);
-		// Criação da lista de eventos
-		lista = new ListaEventos(this);
-		// Agendamento da primeira chegada
-        // Se não for feito, o simulador não tem eventos para simular
-		insereEvento (new Chegada(instante, this));
+        // Inicializaï¿½ï¿½o de parï¿½metros do simulador
+        media_cheg_empresariais = 35;
+        media_serv_empresariais = 20;
+        media_cheg_geral = 12;
+        media_serv_geral = 30;
+        n_clientes = 100;
+        // Inicializaï¿½ï¿½o do relï¿½gio de simulaï¿½ï¿½o
+        instante = 0;
+        // Criaï¿½ï¿½o do serviï¿½o
+        servicoEmpresarial = new Servico(this, 0, 1);
+        servicoGeral = new Servico(this, 1, 2);
+        // Criaï¿½ï¿½o da lista de eventos
+        lista = new ListaEventos(this);
+        // Agendamento da primeira chegada
+        // Se nï¿½o for feito, o simulador nï¿½o tem eventos para simular
+        insereEvento(new Chegada(instante, this, 0));
+        insereEvento(new Chegada(instante, this, 1));
     }
 
-        // programa principal
-        public static void main(String[] args) {
-            // Cria um simulador e
-            Simulador s = new Simulador();
-            // põe-o em marcha
-            s.executa();
-        }
+    // programa principal
+    public static void main(String[] args) {
+        // Cria um simulador e
+        Simulador s = new Simulador();
+        // pï¿½e-o em marcha
+        s.executa();
+    }
+    // Mï¿½todo que actualiza os valores estatï¿½sticos do simulador
 
-    // Método que insere o evento e1 na lista de eventos
-	void insereEvento (Evento e1){
-		lista.insereEvento (e1);
-	}
+    // Mï¿½todo que insere o evento e1 na lista de eventos
+    void insereEvento(Evento e1) {
+        lista.insereEvento(e1);
+    }
 
-    // Método que actualiza os valores estatísticos do simulador
-	private void act_stats(){
-		servicoGeral.act_stats();
-		servicoEmpresa.act_stats();
-	}
+    private void act_stats() {
+        servicoEmpresarial.act_stats();
+        servicoGeral.act_stats();
+    }
 
-    // Método que apresenta os resultados de simulação finais
-	private void relat (){
-    	System.out.println();
-    	System.out.println("------- Resultados finais -------");
-    	System.out.println();
-		servicoGeral.relat();
-		servicoEmpresa.relat();
-	}
+    // Mï¿½todo que apresenta os resultados de simulaï¿½ï¿½o finais
+    private void relat() {
+        System.out.println();
+        System.out.println("------- Resultados finais -------");
+        System.out.println();
+        servicoEmpresarial.relat();
 
-    // Método executivo do simulador
-	public void executa (){
-		Evento e1;
-		// Enquanto não atender todos os clientes
-		while ((servicoGeral.getAtendidos() + servicoEmpresa.getAtendidos()) < n_clientes){
-    	//	lista.print();  // Mostra lista de eventos - desnecessário; é apenas informativo
-			e1 = (Evento)(lista.removeFirst());  // Retira primeiro evento (é o mais iminente) da lista de eventos
-			instante = e1.getInstante();         // Actualiza relógio de simulação
-			act_stats();                         // Actualiza valores estatísticos
-			e1.executa(servicoEmpresa);                 // Executa evento
-		};
-		relat();  // Apresenta resultados de simulação finais
-	}
+        System.out.println();
+        System.out.println("------- Resultados finais -------");
+        System.out.println();
+        servicoGeral.relat();
+    }
 
-    // Método que devolve o instante de simulação corrente
+    // Mï¿½todo executivo do simulador
+    public void executa() {
+        Evento e1;
+        // Enquanto nï¿½o atender todos os clientes
+        while (servicoEmpresarial.getAtendidos() + servicoGeral.getAtendidos() < n_clientes) {
+            //	lista.print();  // Mostra lista de eventos - desnecessï¿½rio; ï¿½ apenas informativo
+            e1 = (Evento) (lista.removeFirst());  // Retira primeiro evento (ï¿½ o mais iminente) da lista de eventos
+            instante = e1.getInstante();         // Actualiza relï¿½gio de simulaï¿½ï¿½o
+            act_stats(); // Actualiza valores estatï¿½sticos
+            if (e1.getTipo() == 0) {
+                e1.executa(servicoEmpresarial);                 // Executa evento
+            } else {
+                e1.executa(servicoGeral);                 // Executa evento
+            }
+        };
+        relat();  // Apresenta resultados de simulaï¿½ï¿½o finais
+    }
+
+    // Mï¿½todo que devolve o instante de simulaï¿½ï¿½o corrente
     public double getInstante() {
         return instante;
     }
 
-    // Método que devolve a média dos intervalos de chegada
-    public double getMedia_cheg() {
-        return media_cheg;
+    // Mï¿½todo que devolve a mï¿½dia dos intervalos de chegada
+    public double getMedia_cheg(int tipo) {
+        if (tipo == 0) {
+            return media_cheg_empresariais;
+        } else {
+            return media_cheg_geral;
+        }
     }
 
-    // Método que devolve a média dos tempos de serviço
-    public double getMedia_serv() {
-        return media_serv;
+    // Mï¿½todo que devolve a mï¿½dia dos tempos de serviï¿½o
+    public double getMedia_serv(int tipo) {
+        if (tipo == 0) {
+            return media_serv_empresariais;
+        } else {
+            return media_serv_geral;
+        }
     }
-
 }

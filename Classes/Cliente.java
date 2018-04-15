@@ -1,10 +1,21 @@
+package scc;
+
 // Classe que representa um cliente
-// Como são indistintos neste exemplo, está vazia
-
-class Cliente {
-    boolean geral;
-
-    Cliente(boolean tipo){
-        this.geral = tipo;
+// Como sï¿½o indistintos neste exemplo, estï¿½ vazia
+public class Cliente {
+    
+    private int tipo;
+    
+    public Cliente(int tipo) {
+        this.tipo = tipo;
     }
+
+    public int getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
+    }
+    
 }

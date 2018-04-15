@@ -1,3 +1,5 @@
+package scc;
+
 /* Prime modulus multiplicative linear congruential pseudo random number generator
 
    Code copied from book "Simulation Modeling and Analysis, second edition,
