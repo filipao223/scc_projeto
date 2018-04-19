@@ -1,7 +1,7 @@
 package scc;
 
-// Classe para gera��o de n�meros aleat�rios segundos v�rias distribui��es
-// Apenas a distribui��o exponencial negativa est� definida
+// Classe para geraçao de numeros aleatorios segundos varias distribuiçoes
+// Apenas a distribuiçao exponencial negativa esta definida
 public class Aleatorio {
 
     private static double vals_x2[] = new double[8];
