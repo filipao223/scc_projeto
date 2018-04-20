@@ -10,7 +10,7 @@ public class Aleatorio {
 		return (-m*Math.log(Math.random()));
 	}
 
-	static double normal (int stream, double m, int dp){
+	static double normal (int stream, double m, double dp){
         double u1, u2;
         double v1=0, v2=0, w=2;
         double y1, y2;

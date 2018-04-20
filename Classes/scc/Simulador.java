@@ -112,4 +112,13 @@ public class Simulador {
             return media_serv_geral;
         }
     }
+    
+    public double getDP(int tipo){
+        if (tipo == 0){
+            return dpEmpresa;
+        }
+        else{
+            return dpGeral;
+        }
+    }
 }
