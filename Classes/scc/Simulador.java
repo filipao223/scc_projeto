@@ -6,6 +6,8 @@ public class Simulador {
     private double instante;
     // Médias das distribuições de chegadas e de atendimento no serviço
     private double media_cheg_empresariais, media_cheg_geral, media_serv_empresariais, media_serv_geral;
+    //Desvios padroes
+    private double dpEmpresa, dpGeral;
     // Número de clientes que vão ser atendidos
     private int n_clientes;
     // Serviço - pode haver mais do que um num simulador
@@ -22,6 +24,8 @@ public class Simulador {
         media_serv_empresariais = 20;
         media_cheg_geral = 12;
         media_serv_geral = 30;
+        dpEmpresa = 4;
+        dpGeral = 8;
         n_clientes = 100;
         // Inicialização do relógio de simulação
         instante = 0;
