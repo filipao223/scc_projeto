@@ -5,18 +5,22 @@ public class Chegada extends Evento {
     
     int stream;
     //Construtor
-    Chegada(double i, Simulador s, int type) {
-        super(i, s, type);
+    Chegada(double i, Simulador s, boolean geral) {
+        super(i, s, geral);
         this.stream = 2;
     }
 
     // Metodo que executa as acçoes correspondentes a chegada de um cliente
-    void executa(Servico serv) {
+    Cliente executa(Servico serv, GlobalVars globals) {
+        Cliente c;
         // Coloca cliente no serviço - na fila ou a ser atendido, conforme o caso
-        serv.insereServico(new Cliente(this.getTipo()));
+        c = serv.insereServico(new Cliente(this.isGeral()), globals);
+
+        if(c != null) return c;
         // Agenda nova chegada para daqui a Aleatorio.exponencial(s.media_cheg) instantes
         //s.insereEvento(new Chegada(s.getInstante() + Aleatorio.exponencial(s.getMedia_cheg(this.getTipo())), s, this.getTipo()));
-        s.insereEvento(new Chegada(s.getInstante() + Aleatorio.normal(stream,s.getMedia_cheg(this.getTipo()),s.getDP(this.getTipo())), s, this.getTipo()));
+        s.insereEvento(new Chegada(s.getInstante() + Aleatorio.normal(stream,s.getMedia_cheg(this.isGeral()),s.getDP(this.isGeral())), s, this.isGeral()));
+        return null;
     }
 
     // Metodo que descreve o evento.

@@ -4,14 +4,15 @@ package scc;
 public class Saida extends Evento {
 
     //Construtor
-    Saida(double i, Simulador s, int tipo) {
+    Saida(double i, Simulador s, boolean tipo) {
         super(i, s, tipo);
     }
 
     // Método que executa as acçoes correspondentes à saída de um cliente
-    void executa(Servico serv) {
+    Cliente executa(Servico serv, GlobalVars globals) {
         // Retira cliente do serviço
         serv.removeServico();
+        return null;
     }
 
     // Método que descreve o evento.

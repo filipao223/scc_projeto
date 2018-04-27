@@ -4,18 +4,22 @@ package scc;
 // Como sao indistintos neste exemplo, esta vazia
 public class Cliente {
     
-    private int tipo;
+    private boolean geral;
+    private boolean empresarial;
     
-    public Cliente(int tipo) {
-        this.tipo = tipo;
+    public Cliente(boolean tipo) {
+        this.geral = tipo;this.empresarial = !tipo;
     }
 
-    public int getTipo() {
-        return tipo;
+    public boolean isGeral() {
+        return geral;
+    }
+    public boolean isEmpresarial() {
+        return empresarial;
     }
 
-    public void setTipo(int tipo) {
-        this.tipo = tipo;
+    public void setTipo(boolean tipo) {
+        this.geral = tipo;
     }
     
 }
