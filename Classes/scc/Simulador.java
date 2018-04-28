@@ -30,7 +30,7 @@ public class Simulador {
         media_serv_geral = 30;
         dpEmpresa = 4;
         dpGeral = 8;
-        n_clientes = 100;
+        n_clientes = 1000;
         // Inicialização do relógio de simulação
         instante = 0;
         // Criação do serviço
@@ -39,7 +39,7 @@ public class Simulador {
         // Criação da lista de eventos
         lista = new ListaEventos(this);
 
-        GlobalVars globals = new GlobalVars();
+        globals = new GlobalVars();
 
         // Agendamento da primeira chegada
         // Se não for feito, o simulador não tem eventos para simular

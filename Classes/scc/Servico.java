@@ -13,9 +13,11 @@ public class Servico {
     private Simulador s; // Referencia para o simulador a que pertence o serviço
     private boolean balcaoEmpresa, balcaoGeral;
     private int numEmpregados;
+    private GlobalVars globals;
+
     
     // Construtor
-    Servico(Simulador s, boolean type, int numEmpregados) {
+    Servico(Simulador s, boolean type, int numEmpregados, GlobalVars globals) {
         this.s = s;
         fila = new Vector<Cliente>(); // Cria fila de espera
         estado = 0; // Livre
@@ -26,21 +28,22 @@ public class Servico {
         this.balcaoEmpresa = type;
         this.balcaoGeral = !type;
         this.numEmpregados = numEmpregados;
+        this.globals = globals;
     }
 
     // Método que insere cliente (c) no serviço
-    public Cliente insereServico(Cliente c, GlobalVars globals) {
+    public Cliente insereServico(Cliente c) {
         if (estado < numEmpregados) { // Se serviço livre,
             estado++;     // fica ocupado e
-
-            if(this.balcaoGeral && estado == numEmpregados) globals.updateBalcoes(true);
-            else if(this.balcaoGeral && estado < numEmpregados) globals.updateBalcoes(false);
-
+            globals.updateBalcoes(estado,this.balcaoEmpresa);
             // agenda saída do cliente c para daqui a s.getMedia_serv() instantes
             s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.isGeral()), s, c.isGeral()));
         } else {
-            if (this.balcaoEmpresa && c.isEmpresarial() && estado == numEmpregados && globals.balcoesLivres) return c; //Se serviço empresarial ocupado e cliente for geral, é enviado para o balcao geral
-            fila.addElement(c); // Se serviço ocupado, o cliente vai para a fila de espera
+            if(globals.estadoGeral < numEmpregados){
+
+            }
+
+           fila.addElement(c); // Se serviço ocupado, o cliente vai para a fila de espera
         }
         return null;
     }
@@ -50,6 +53,7 @@ public class Servico {
         atendidos++; // Regista que acabou de atender + 1 cliente
         if (fila.size() == 0) {
             estado--; // Se a fila esta vazia, liberta o serviço
+            globals.updateBalcoes(estado,this.balcaoEmpresa);
         } else { // Se nao,
             // vai buscar proximo cliente à fila de espera e
                 Cliente c = (Cliente)fila.firstElement();

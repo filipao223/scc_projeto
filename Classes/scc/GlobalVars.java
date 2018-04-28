@@ -5,19 +5,20 @@ public class GlobalVars {
     boolean balcoesOcupados;
     boolean balcoesLivres;
 
+
+    int estadoGeral;
+    int estadoEmpresarial;
+
     public GlobalVars(){
-        this.balcoesOcupados = false;
-        this.balcoesLivres = true;
+        estadoGeral = 0;
+        estadoEmpresarial = 0;
     }
 
-    public void updateBalcoes(boolean ocupado){
-        if(ocupado){
-            this.balcoesLivres = false;
-            this.balcoesOcupados = true;
-        }
-        else{
-            this.balcoesLivres = true;
-            this.balcoesOcupados = false;
-        }
+    public void updateBalcoes(int estado, boolean tiposervico){
+
+        if(tiposervico)
+            estadoGeral = estado;
+        else
+            estadoEmpresarial = estado;
     }
 }
