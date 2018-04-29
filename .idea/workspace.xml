@@ -2,40 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6b76a61b-c25c-4b49-8db2-1f72c797ca4b" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/Projeto.iml" afterPath="$PROJECT_DIR$/.idea/Projeto.iml" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/Classes/Aleatorio.java" afterPath="$PROJECT_DIR$/Classes/scc/Aleatorio.java" />
-      <change beforePath="$PROJECT_DIR$/Classes/Chegada.java" afterPath="$PROJECT_DIR$/Classes/scc/Chegada.java" />
-      <change beforePath="$PROJECT_DIR$/Classes/Cliente.java" afterPath="$PROJECT_DIR$/Classes/scc/Cliente.java" />
-      <change beforePath="$PROJECT_DIR$/Classes/Evento.java" afterPath="$PROJECT_DIR$/Classes/scc/Evento.java" />
-      <change beforePath="$PROJECT_DIR$/Classes/ListaEventos.java" afterPath="$PROJECT_DIR$/Classes/scc/ListaEventos.java" />
-      <change beforePath="$PROJECT_DIR$/Classes/RandomGenerator.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Classes/Saida.java" afterPath="$PROJECT_DIR$/Classes/scc/Saida.java" />
-      <change beforePath="$PROJECT_DIR$/Classes/Servico.java" afterPath="$PROJECT_DIR$/Classes/scc/Servico.java" />
-      <change beforePath="$PROJECT_DIR$/Classes/Simulador.java" afterPath="$PROJECT_DIR$/Classes/scc/Simulador.java" />
-      <change beforePath="$PROJECT_DIR$/Simulador_Java/.~lock.Simulador_Java_Versao_Impressao.docx#" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Simulador_Java/Aleatorio.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Simulador_Java/Chegada.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Simulador_Java/Cliente.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Simulador_Java/Evento.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Simulador_Java/ListaEventos.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Simulador_Java/RandomGenerator.java" afterPath="$PROJECT_DIR$/Classes/scc/RandomGenerator.java" />
-      <change beforePath="$PROJECT_DIR$/Simulador_Java/Saida.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Simulador_Java/Servico.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Simulador_Java/Simulador.java" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Simulador_Java/Simulador_Java_Versao_Impressao.docx" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projeto/.~lock.Simulador_Java_Versao_Impressao.docx#" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projeto/Aleatorio.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projeto/Chegada.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projeto/Cliente.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projeto/Evento.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projeto/ListaEventos.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projeto/Saida.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projeto/Servico.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projeto/Simulador.class" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/Projeto/Simulador_Java_Versao_Impressao.docx" afterPath="" />
+      <change afterPath="$PROJECT_DIR$/Classes/scc/GlobalVars.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/scc/Chegada.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/scc/Chegada.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/scc/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/scc/Cliente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/scc/Evento.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/scc/Evento.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/scc/Saida.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/scc/Saida.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/scc/Servico.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/scc/Servico.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Classes/scc/Simulador.java" beforeDir="false" afterPath="$PROJECT_DIR$/Classes/scc/Simulador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projeto/scc/Aleatorio.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Projeto/scc/Aleatorio.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projeto/scc/Chegada.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Projeto/scc/Chegada.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projeto/scc/Cliente.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Projeto/scc/Cliente.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projeto/scc/Evento.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Projeto/scc/Evento.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projeto/scc/Saida.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Projeto/scc/Saida.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projeto/scc/Servico.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Projeto/scc/Servico.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Projeto/scc/Simulador.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Projeto/scc/Simulador.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -46,22 +27,40 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="225">
-      <file leaf-file-name="Simulador.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Simulador.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Classes/scc/Simulador.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="219">
-              <caret line="97" column="16" lean-forward="true" selection-start-line="97" selection-start-column="16" selection-end-line="97" selection-end-column="16" />
-              <folding />
+            <state relative-caret-position="129">
+              <caret line="32" column="25" selection-start-line="32" selection-start-column="25" selection-end-line="32" selection-end-column="25" />
+              <folding>
+                <element signature="e#2139#2140#0" expanded="true" />
+                <element signature="e#2177#2178#0" expanded="true" />
+                <element signature="e#3815#3816#0" expanded="true" />
+                <element signature="e#3846#3847#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Servico.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Servico.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Classes/scc/Servico.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="64">
-              <caret line="5" column="34" lean-forward="false" selection-start-line="5" selection-start-column="34" selection-end-line="5" selection-end-column="34" />
-              <folding />
+            <state relative-caret-position="155">
+              <caret line="40" column="16" lean-forward="true" selection-start-line="40" selection-start-column="16" selection-end-line="40" selection-end-column="16" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#4453#4454#0" expanded="true" />
+                <element signature="e#4485#4486#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GlobalVars.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Classes/scc/GlobalVars.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="19" column="23" selection-start-line="19" selection-start-column="23" selection-end-line="19" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -69,9 +68,12 @@
       <file leaf-file-name="Saida.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Classes/scc/Saida.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="16" column="9" lean-forward="false" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
-              <folding />
+            <state relative-caret-position="238">
+              <caret line="17" column="9" selection-start-line="17" selection-start-column="9" selection-end-line="17" selection-end-column="9" />
+              <folding>
+                <element signature="e#181#182#0" expanded="true" />
+                <element signature="e#214#215#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -79,9 +81,8 @@
       <file leaf-file-name="RandomGenerator.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Classes/scc/RandomGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1088">
-              <caret line="64" column="13" lean-forward="false" selection-start-line="64" selection-start-column="13" selection-end-line="64" selection-end-column="13" />
-              <folding />
+            <state relative-caret-position="1088">
+              <caret line="64" column="13" selection-start-line="64" selection-start-column="13" selection-end-line="64" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -89,9 +90,8 @@
       <file leaf-file-name="ListaEventos.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Classes/scc/ListaEventos.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="64">
-              <caret line="4" column="104" lean-forward="false" selection-start-line="4" selection-start-column="104" selection-end-line="4" selection-end-column="104" />
-              <folding />
+            <state relative-caret-position="68">
+              <caret line="4" column="104" selection-start-line="4" selection-start-column="104" selection-end-line="4" selection-end-column="104" />
             </state>
           </provider>
         </entry>
@@ -99,9 +99,8 @@
       <file leaf-file-name="Evento.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Classes/scc/Evento.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="448">
-              <caret line="32" column="46" lean-forward="false" selection-start-line="32" selection-start-column="46" selection-end-line="32" selection-end-column="46" />
-              <folding />
+            <state relative-caret-position="180">
+              <caret line="32" column="46" selection-start-line="32" selection-start-column="46" selection-end-line="32" selection-end-column="46" />
             </state>
           </provider>
         </entry>
@@ -109,9 +108,8 @@
       <file leaf-file-name="Cliente.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Classes/scc/Cliente.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="48">
-              <caret line="3" column="43" lean-forward="false" selection-start-line="3" selection-start-column="43" selection-end-line="3" selection-end-column="43" />
-              <folding />
+            <state relative-caret-position="51">
+              <caret line="3" column="43" selection-start-line="3" selection-start-column="43" selection-end-line="3" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -119,9 +117,8 @@
       <file leaf-file-name="Chegada.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Classes/scc/Chegada.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="14" column="35" lean-forward="false" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
-              <folding />
+            <state relative-caret-position="163">
+              <caret line="16" column="57" selection-start-line="16" selection-start-column="57" selection-end-line="16" selection-end-column="57" />
             </state>
           </provider>
         </entry>
@@ -129,9 +126,8 @@
       <file leaf-file-name="Aleatorio.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Classes/scc/Aleatorio.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="48">
-              <caret line="3" column="50" lean-forward="false" selection-start-line="3" selection-start-column="50" selection-end-line="3" selection-end-column="50" />
-              <folding />
+            <state relative-caret-position="425">
+              <caret line="27" column="39" selection-start-line="27" selection-start-column="39" selection-end-line="27" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -162,51 +158,47 @@
         <option value="$PROJECT_DIR$/Classes/scc/Servico.java" />
         <option value="$PROJECT_DIR$/Classes/scc/Saida.java" />
         <option value="$PROJECT_DIR$/Classes/scc/ListaEventos.java" />
-        <option value="$PROJECT_DIR$/Classes/scc/Evento.java" />
-        <option value="$PROJECT_DIR$/Classes/scc/Cliente.java" />
-        <option value="$PROJECT_DIR$/Classes/scc/Chegada.java" />
         <option value="$PROJECT_DIR$/Classes/scc/Aleatorio.java" />
+        <option value="$PROJECT_DIR$/Classes/scc/Cliente.java" />
+        <option value="$PROJECT_DIR$/Classes/scc/Evento.java" />
+        <option value="$PROJECT_DIR$/Classes/scc/Chegada.java" />
+        <option value="$PROJECT_DIR$/Classes/scc/Saida.java" />
+        <option value="$PROJECT_DIR$/Classes/scc/Simulador.java" />
+        <option value="$PROJECT_DIR$/Classes/scc/GlobalVars.java" />
+        <option value="$PROJECT_DIR$/Classes/scc/Servico.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="577" />
-    <option name="y" value="92" />
-    <option name="width" value="1705" />
-    <option name="height" value="915" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-1" />
+    <option name="y" value="-4" />
+    <option name="width" value="1368" />
+    <option name="height" value="773" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
-      <flattenPackages />
-      <showMembers />
-      <showModules />
-      <showLibraryContents />
-      <hideEmptyPackages />
-      <abbreviatePackageNames />
-      <autoscrollToSource />
-      <autoscrollFromSource />
-      <sortByType />
-      <manualOrder />
+    <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="AndroidView" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="Projeto" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Projeto" type="462c0819:PsiDirectoryNode" />
+              <item name="scc_projeto" type="b2602c69:ProjectViewProjectNode" />
+              <item name="scc_projeto" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Projeto" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Projeto" type="462c0819:PsiDirectoryNode" />
+              <item name="scc_projeto" type="b2602c69:ProjectViewProjectNode" />
+              <item name="scc_projeto" type="462c0819:PsiDirectoryNode" />
               <item name="Classes" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="Projeto" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Projeto" type="462c0819:PsiDirectoryNode" />
+              <item name="scc_projeto" type="b2602c69:ProjectViewProjectNode" />
+              <item name="scc_projeto" type="462c0819:PsiDirectoryNode" />
               <item name="Classes" type="462c0819:PsiDirectoryNode" />
               <item name="scc" type="462c0819:PsiDirectoryNode" />
             </path>
@@ -219,11 +211,13 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SearchEverywhereHistoryKey" value="exponenci&#9;PSI&#9;JAVA://Aleatorio#exponencial" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="SearchEverywhereHistoryKey" value="exponenci&#9;PSI&#9;JAVA://Aleatorio#exponencial" />
+    <property name="settings.editor.selected.configurable" value="project.propGUI" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -257,7 +251,7 @@
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="Projeto" />
-      <envs />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />

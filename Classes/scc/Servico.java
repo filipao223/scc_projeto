@@ -11,10 +11,13 @@ public class Servico {
     private double temp_ult, soma_temp_esp, soma_temp_serv; // Variáveis para cálculos estatísticos
     private Vector<Cliente> fila; // Fila de espera do serviço
     private Simulador s; // Referencia para o simulador a que pertence o serviço
-    private int type, numEmpregados;
+    private boolean balcaoEmpresa, balcaoGeral;
+    private int numEmpregados;
+    private GlobalVars globals;
+
     
     // Construtor
-    Servico(Simulador s, int type, int numEmpregados) {
+    Servico(Simulador s, boolean type, int numEmpregados, GlobalVars globals) {
         this.s = s;
         fila = new Vector<Cliente>(); // Cria fila de espera
         estado = 0; // Livre
@@ -22,19 +25,27 @@ public class Servico {
         atendidos = 0;  // Inicializaçao de variàveis
         soma_temp_esp = 0;
         soma_temp_serv = 0;
-        this.type = type;
+        this.balcaoEmpresa = type;
+        this.balcaoGeral = !type;
         this.numEmpregados = numEmpregados;
+        this.globals = globals;
     }
 
     // Método que insere cliente (c) no serviço
-    public void insereServico(Cliente c) {
+    public Cliente insereServico(Cliente c) {
         if (estado < numEmpregados) { // Se serviço livre,
             estado++;     // fica ocupado e
+            globals.updateBalcoes(estado,this.balcaoEmpresa);
             // agenda saída do cliente c para daqui a s.getMedia_serv() instantes
-            s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.getTipo()), s, c.getTipo()));
+            s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.isGeral()), s, c.isGeral()));
         } else {
-            fila.addElement(c); // Se serviço ocupado, o cliente vai para a fila de espera
+            if(globals.estadoGeral < numEmpregados){
+
+            }
+
+           fila.addElement(c); // Se serviço ocupado, o cliente vai para a fila de espera
         }
+        return null;
     }
 
     // Método que remove cliente do serviço
@@ -42,12 +53,13 @@ public class Servico {
         atendidos++; // Regista que acabou de atender + 1 cliente
         if (fila.size() == 0) {
             estado--; // Se a fila esta vazia, liberta o serviço
+            globals.updateBalcoes(estado,this.balcaoEmpresa);
         } else { // Se nao,
             // vai buscar proximo cliente à fila de espera e
                 Cliente c = (Cliente)fila.firstElement();
             fila.removeElementAt(0);
             // agenda a sua saida para daqui a s.getMedia_serv() instantes
-            s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.getTipo()), s, c.getTipo()));
+            s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.isGeral()), s, c.isGeral()));
         }
     }
 

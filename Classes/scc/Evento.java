@@ -7,17 +7,17 @@ public abstract class Evento {
 
     protected double instante;  // Instante de ocorrencia do evento
     protected Simulador s;      // Simulador onde ocorre o evento
-    private int tipo;
+    private boolean geral;
     
     //Construtor
-    Evento(double i, Simulador s, int tipo) {
+    Evento(double i, Simulador s, boolean tipo) {
         instante = i;
         this.s = s;
-        this.tipo = tipo;
+        this.geral = tipo;
     }
 
-    public int getTipo() {
-        return tipo;
+    public boolean isGeral() {
+        return geral;
     }
 
     // Método que determina se o evento corrente ocorre primeiro, ou nao, do que o evento e1
@@ -28,7 +28,7 @@ public abstract class Evento {
     }
 
     // Método que executa um evento; a ser definido em cada tipo de evento
-    abstract void executa(Servico s);
+    abstract Cliente executa(Servico s, GlobalVars globals);
 
     // Metodo que devolve o instante de ocorrencia do evento
     public double getInstante() {
