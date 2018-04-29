@@ -54,7 +54,7 @@ public class Simulador {
         // p�e-o em marcha
         s.executa();
     }
-    // Método que actualiza os valores estatísticos do simulador
+    // Métdo que actualiza os valores estatísticos do simulador
 
     // Método que insere o evento e1 na lista de eventos
     void insereEvento(Evento e1) {
