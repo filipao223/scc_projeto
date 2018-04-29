@@ -39,7 +39,7 @@ public class Simulador {
         // Criação da lista de eventos
         lista = new ListaEventos(this);
 
-        GlobalVars globals = new GlobalVars();
+        globals = new GlobalVars();
 
         // Agendamento da primeira chegada
         // Se não for feito, o simulador não tem eventos para simular

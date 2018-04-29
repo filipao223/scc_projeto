@@ -39,7 +39,9 @@ public class Servico {
             // agenda saída do cliente c para daqui a s.getMedia_serv() instantes
             s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.isGeral()), s, c.isGeral()));
         } else {
-            if (this.balcaoEmpresa && c.isEmpresarial() && estado == numEmpregados && globals.balcoesLivres) return c; //Se serviço empresarial ocupado e cliente for geral, é enviado para o balcao geral
+            if (this.balcaoEmpresa && c.isEmpresarial() && estado == numEmpregados && globals.balcoesLivres){
+                return c; //Se serviço empresarial ocupado e cliente for geral, é enviado para o balcao geral
+            }
             fila.addElement(c); // Se serviço ocupado, o cliente vai para a fila de espera
         }
         return null;
