@@ -14,11 +14,11 @@ public class Chegada extends Evento {
     Cliente executa(Servico serv) {
         Cliente c;
         // Coloca cliente no serviço - na fila ou a ser atendido, conforme o caso
-        serv.insereServico(new Cliente(this.isGeral()));
+        serv.insereServico(new Cliente(this.isBalcaoGeral()));
 
         // Agenda nova chegada para daqui a Aleatorio.exponencial(s.media_cheg) instantes
         //s.insereEvento(new Chegada(s.getInstante() + Aleatorio.exponencial(s.getMedia_cheg(this.getTipo())), s, this.getTipo()));
-        s.insereEvento(new Chegada(s.getInstante() + Aleatorio.normal(stream,s.getMedia_cheg(this.isGeral()),s.getDP(this.isGeral())), s, this.isGeral()));
+        s.insereEvento(new Chegada(s.getInstante() + Aleatorio.normal(stream,s.getMedia_cheg(this.isBalcaoGeral()),s.getDP(this.isBalcaoGeral())), s, this.isBalcaoGeral()));
         return null;
     }
 

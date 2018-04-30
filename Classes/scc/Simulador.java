@@ -28,7 +28,7 @@ public class Simulador {
         media_serv_geral = 30;
         dpEmpresa = 4;
         dpGeral = 8;
-        n_clientes = 1000;
+        n_clientes = 10000;
         // Inicialização do relógio de simulação
         instante = 0;
         // Criação do serviço
@@ -93,7 +93,7 @@ public class Simulador {
             e1 = (Evento) (lista.removeFirst());  // Retira primeiro evento (é o mais iminente) da lista de eventos
             instante = e1.getInstante();         // Actualiza relógio de simulação
             act_stats(); // Actualiza valores estatísticos
-            if (e1.isGeral()) {
+            if (e1.isBalcaoGeral()) {
                 e1.executa(servicoGeral);               // Executa evento
             } else {
                 e1.executa(servicoEmpresarial);                 // Executa evento
