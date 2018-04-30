@@ -7,17 +7,17 @@ public abstract class Evento {
 
     protected double instante;  // Instante de ocorrencia do evento
     protected Simulador s;      // Simulador onde ocorre o evento
-    private boolean geral;
+    private boolean balcaoGeral;
     
     //Construtor
     Evento(double i, Simulador s, boolean tipo) {
         instante = i;
         this.s = s;
-        this.geral = tipo;
+        this.balcaoGeral = tipo;
     }
 
-    public boolean isGeral() {
-        return geral;
+    public boolean isBalcaoGeral() {
+        return balcaoGeral;
     }
 
     // Método que determina se o evento corrente ocorre primeiro, ou nao, do que o evento e1

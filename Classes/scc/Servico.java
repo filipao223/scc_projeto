@@ -14,8 +14,7 @@ public class Servico {
     private boolean balcaoEmpresa;
     private int numEmpregados;
     private Servico outroServico;
-    private Vector<Cliente> currentClients;
-    private Cliente clientToRemove;
+    private Vector<Cliente> currentGeralClients;
 
     private ListaEventos listaEventos;
     private Evento eventoReturn;
@@ -29,7 +28,7 @@ public class Servico {
         atendidos = 0;  // Inicializaçao de variàveis
         soma_temp_esp = 0;
         soma_temp_serv = 0;
-        currentClients = new Vector<Cliente>();
+        currentGeralClients = new Vector<Cliente>();
         listaEventos = null;
         eventoReturn = null;
         this.balcaoEmpresa = type; //Porque cliente empresarial é do tipo false (0)
@@ -43,54 +42,58 @@ public class Servico {
         if (estado < numEmpregados) { // Se serviço livre,
             estado++;     // fica ocupado e
 
-            currentClients.addElement(c);
-            clientToRemove = c;
+            if(c.isGeral() && balcaoEmpresa) //Lista de clientes gerais no balcao empresarial
+                currentGeralClients.addElement(c);
 
             // agenda saída do cliente c para daqui a s.getMedia_serv() instantes, dependendo do balcao onde se encontra
             if(c.isGeral() && balcaoEmpresa){
-                eventoReturn = s.insereEvento(new Saida(s.getInstante() +25,s,c.isGeral()));
+                eventoReturn = s.insereEvento(new Saida(s.getInstante() +25,s,balcaoEmpresa));
             }
             else if(!c.isGeral() && !balcaoEmpresa){
-                eventoReturn = s.insereEvento(new Saida(s.getInstante() + 23,s,c.isGeral()));
+                eventoReturn = s.insereEvento(new Saida(s.getInstante() + 23,s,balcaoEmpresa));
             }
-            else eventoReturn = s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.isGeral()), s, c.isGeral()));
+            else if (c.isGeral() && !balcaoEmpresa)
+                eventoReturn = s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.isGeral()), s, balcaoEmpresa));
+
+            else eventoReturn = s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.isGeral()), s, balcaoEmpresa));
 
         } else {
             if(outroServico.getEstado() < outroServico.getNumEmpregados()) {
+                //if(!balcaoEmpresa) System.out.println("Passou um cliente geral para balcao empresa");
                 outroServico.insereServico(c);
             }
 
-            else if(this.balcaoEmpresa && !c.isGeral() && HaClientesGerais(currentClients)){
+            else if(this.balcaoEmpresa && !c.isGeral() && !currentGeralClients.isEmpty()){
                 listaEventos.remove(eventoReturn);
-                outroServico.insereServico(currentClients.firstElement());
+                outroServico.fila.add(currentGeralClients.firstElement());
 
-                currentClients.add(c);
-                clientToRemove = c;
+                currentGeralClients.removeElementAt(0);
+                this.insereServico(c);
 
                 //Atendimento
-                eventoReturn = s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.isGeral()), s, c.isGeral()));
+                eventoReturn = s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.isGeral()), s, balcaoEmpresa));
+            }
+
+            else if(!balcaoEmpresa && !c.isGeral()){
+                outroServico.fila.add(c);
             }
 
             else fila.addElement(c); // Se serviço ocupado, o cliente vai para a fila de espera
         }
     }
 
-
-
     // Método que remove cliente do serviço
     public void removeServico() {
         atendidos++; // Regista que acabou de atender + 1 cliente
-        currentClients.remove(clientToRemove); //O cliente foi atendido, remove-o da lista dos atendidos atualmente
+        //currentClients.remove(clientToRemove); //O cliente foi atendido, remove-o da lista dos atendidos atualmente
         if (fila.size() == 0) {
-            if(estado==0)
-                estado=0;
             estado--; // Se a fila esta vazia, liberta o serviço
         } else { // Se nao,
             // vai buscar proximo cliente à fila de espera e
                 Cliente c = (Cliente)fila.firstElement();
             fila.removeElementAt(0);
             // agenda a sua saida para daqui a s.getMedia_serv() instantes
-            eventoReturn = s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.isGeral()), s, c.isGeral()));
+            eventoReturn = s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.isGeral()), s, balcaoEmpresa));
         }
     }
 
@@ -149,4 +152,10 @@ public class Servico {
         return false;
     }
 
+    public Cliente firstGeral(Vector<Cliente> lista){
+        for (Cliente c:lista){
+            if(c.isGeral()) return c;
+        }
+        return null;
+    }
 }
