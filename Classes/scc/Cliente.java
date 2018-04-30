@@ -1,25 +1,30 @@
 package scc;
 
 // Classe que representa um cliente
-// Como sao indistintos neste exemplo, esta vazia
+// Como s�o indistintos neste exemplo, est� vazia
 public class Cliente {
     
-    private boolean geral;
-    private boolean empresarial;
+    private boolean type;
+    private Evento evento;
     
-    public Cliente(boolean tipo) {
-        this.geral = tipo;this.empresarial = !tipo;
+    public Cliente(boolean type) {
+        this.type = type;
     }
 
-    public boolean isGeral() {
-        return geral;
-    }
-    public boolean isEmpresarial() {
-        return empresarial;
+    public boolean getTipo() {
+        return type;
     }
 
-    public void setTipo(boolean tipo) {
-        this.geral = tipo;
+    public void setType(boolean type) {
+        this.type = type;
+    }
+    
+    public void setEvento(Evento e1) {
+        this.evento = e1;
+    }
+
+    public Evento getEvento() {
+        return evento;
     }
     
 }
