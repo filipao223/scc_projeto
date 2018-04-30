@@ -16,7 +16,6 @@ public class Simulador {
     // Lista de eventos - onde ficam registados todos os eventos que vão ocorrer na simulação
     // Cada simulador só tem uma
     private ListaEventos lista;
-    GlobalVars globals;
 
     boolean clienteGeral = true;
     boolean clienteEmpresarial = false;
@@ -30,16 +29,21 @@ public class Simulador {
         media_serv_geral = 30;
         dpEmpresa = 4;
         dpGeral = 8;
-        n_clientes = 100;
+        n_clientes = 1000;
         // Inicialização do relógio de simulação
         instante = 0;
         // Criação do serviço
         servicoEmpresarial = new Servico(this, clienteEmpresarial, 1);
         servicoGeral = new Servico(this, clienteGeral, 2);
+
+        servicoEmpresarial.setOutroServico(servicoGeral);
+        servicoGeral.setOutroServico(servicoEmpresarial);
+
         // Criação da lista de eventos
         lista = new ListaEventos(this);
 
-        globals = new GlobalVars();
+        servicoEmpresarial.setListaEventos(lista);
+        servicoGeral.setListaEventos(lista);
 
         // Agendamento da primeira chegada
         // Se não for feito, o simulador não tem eventos para simular
@@ -57,8 +61,9 @@ public class Simulador {
     // Métdo que actualiza os valores estatísticos do simulador
 
     // Método que insere o evento e1 na lista de eventos
-    void insereEvento(Evento e1) {
+    Evento insereEvento(Evento e1) {
         lista.insereEvento(e1);
+        return e1;
     }
 
     private void act_stats() {
@@ -90,10 +95,9 @@ public class Simulador {
             instante = e1.getInstante();         // Actualiza relógio de simulação
             act_stats(); // Actualiza valores estatísticos
             if (e1.isGeral()) {
-                e1.executa(servicoGeral, this.globals);               // Executa evento
+                e1.executa(servicoGeral);               // Executa evento
             } else {
-                c = e1.executa(servicoEmpresarial, this.globals);                 // Executa evento
-                if (c != null) e1.executa(servicoGeral, this.globals);
+                e1.executa(servicoEmpresarial);                 // Executa evento
             }
         };
         relat();  // Apresenta resultados de simulação finais

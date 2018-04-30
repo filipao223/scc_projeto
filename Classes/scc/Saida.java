@@ -9,9 +9,9 @@ public class Saida extends Evento {
     }
 
     // Método que executa as acçoes correspondentes à saída de um cliente
-    Cliente executa(Servico serv, GlobalVars globals) {
+    Cliente executa(Servico serv) {
         // Retira cliente do serviço
-        serv.removeServico();
+            serv.removeServico();
         return null;
     }
 
