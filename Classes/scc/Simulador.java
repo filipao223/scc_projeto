@@ -36,10 +36,13 @@ public class Simulador {
         // Criação do serviço
         servicoEmpresarial = new Servico(this, clienteEmpresarial, 1);
         servicoGeral = new Servico(this, clienteGeral, 2);
+
+        servicoEmpresarial.setPassa(servicoGeral);
+        servicoGeral.setPassa(servicoEmpresarial);
         // Criação da lista de eventos
         lista = new ListaEventos(this);
 
-        GlobalVars globals = new GlobalVars();
+        globals = new GlobalVars();
 
         // Agendamento da primeira chegada
         // Se não for feito, o simulador não tem eventos para simular
@@ -92,8 +95,7 @@ public class Simulador {
             if (e1.isGeral()) {
                 e1.executa(servicoGeral, this.globals);               // Executa evento
             } else {
-                c = e1.executa(servicoEmpresarial, this.globals);                 // Executa evento
-                if (c != null) e1.executa(servicoGeral, this.globals);
+                e1.executa(servicoEmpresarial, this.globals);                 // Executa evento
             }
         };
         relat();  // Apresenta resultados de simulação finais

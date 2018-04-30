@@ -14,9 +14,8 @@ public class Chegada extends Evento {
     Cliente executa(Servico serv, GlobalVars globals) {
         Cliente c;
         // Coloca cliente no serviço - na fila ou a ser atendido, conforme o caso
-        c = serv.insereServico(new Cliente(this.isGeral()), globals);
+        serv.insereServico(new Cliente(this.isGeral()), globals);
 
-        if(c != null) return c;
         // Agenda nova chegada para daqui a Aleatorio.exponencial(s.media_cheg) instantes
         //s.insereEvento(new Chegada(s.getInstante() + Aleatorio.exponencial(s.getMedia_cheg(this.getTipo())), s, this.getTipo()));
         s.insereEvento(new Chegada(s.getInstante() + Aleatorio.normal(stream,s.getMedia_cheg(this.isGeral()),s.getDP(this.isGeral())), s, this.isGeral()));
