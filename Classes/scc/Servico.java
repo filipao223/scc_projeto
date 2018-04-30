@@ -44,13 +44,19 @@ public class Servico {
             currentClients.addElement(c);
 
             // agenda saída do cliente c para daqui a s.getMedia_serv() instantes
+            if(c.isGeral() && balcaoEmpresa){
+                eventoReturn = s.insereEvento(new Saida(s.getInstante() + 25,s,c.isGeral()));
+            }
+            if(c.isEmpresarial() && balcaoGeral){
+                eventoReturn = s.insereEvento(new Saida(s.getInstante() + 23,s,c.isGeral()));
+            }
             eventoReturn = s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.isGeral()), s, c.isGeral()));
         } else {
             if(outroServico.getEstado() < outroServico.getNumEmpregados()) {
                 outroServico.insereServico(c);
             }
 
-            else if(this.balcaoEmpresa && c.isEmpresarial() && HaClientesGerais(currentClients)){
+            if(this.balcaoEmpresa && c.isEmpresarial() && HaClientesGerais(currentClients)){
                 listaEventos.remove(eventoReturn);
                 outroServico.insereServico(currentClients.firstElement());
                 currentClients.add(c);
