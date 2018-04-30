@@ -17,8 +17,7 @@ public class Simulador {
     // Cada simulador só tem uma
     private ListaEventos lista;
 
-    boolean clienteGeral = true;
-    boolean clienteEmpresarial = false;
+    boolean Geral = true;
 
     // Construtor
     public Simulador() {
@@ -33,8 +32,8 @@ public class Simulador {
         // Inicialização do relógio de simulação
         instante = 0;
         // Criação do serviço
-        servicoEmpresarial = new Servico(this, clienteEmpresarial, 1);
-        servicoGeral = new Servico(this, clienteGeral, 2);
+        servicoEmpresarial = new Servico(this, !Geral, 1);
+        servicoGeral = new Servico(this, Geral, 2);
 
         servicoEmpresarial.setOutroServico(servicoGeral);
         servicoGeral.setOutroServico(servicoEmpresarial);
@@ -47,15 +46,15 @@ public class Simulador {
 
         // Agendamento da primeira chegada
         // Se não for feito, o simulador não tem eventos para simular
-        insereEvento(new Chegada(instante, this, clienteEmpresarial));
-        insereEvento(new Chegada(instante, this, clienteGeral));
+        insereEvento(new Chegada(instante, this, !Geral));
+        insereEvento(new Chegada(instante, this, Geral));
     }
 
     // programa principal
     public static void main(String[] args) {
         // Cria um simulador e
         Simulador s = new Simulador();
-        // p�e-o em marcha
+        // põe-o em marcha
         s.executa();
     }
     // Método que actualiza os valores estatísticos do simulador
