@@ -15,6 +15,7 @@ public class Servico {
     private int numEmpregados;
     private Servico outroServico;
     private Vector<Cliente> currentClients;
+    private Cliente clientToRemove;
 
     private ListaEventos listaEventos;
     private Evento eventoReturn;
@@ -42,20 +43,29 @@ public class Servico {
             estado++;     // fica ocupado e
 
             currentClients.addElement(c);
+            clientToRemove = c;
 
             // agenda saída do cliente c para daqui a s.getMedia_serv() instantes
             eventoReturn = s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.isGeral()), s, c.isGeral()));
+            currentClients.remove(c);
         } else {
             if(outroServico.getEstado() < outroServico.getNumEmpregados()) {
                 outroServico.insereServico(c);
             }
 
             else if(this.balcaoEmpresa && c.isEmpresarial() && HaClientesGerais(currentClients)){
-                listaEventos.remove(eventoReturn);
+                System.out.println("A preparar para remover");
+                listaEventos.remove(eventoReturn); // Cancela a saída do cliente
+                System.out.println("Retirou cliente geral do balcao");
                 outroServico.insereServico(currentClients.firstElement());
+
                 currentClients.add(c);
+                clientToRemove = c;
+
                 //Atendimento
                 eventoReturn = s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.isGeral()), s, c.isGeral()));
+
+                currentClients.remove(c);
             }
 
             else fila.addElement(c); // Se serviço ocupado, o cliente vai para a fila de espera
@@ -68,6 +78,8 @@ public class Servico {
     public void removeServico() {
         atendidos++; // Regista que acabou de atender + 1 cliente
         if (fila.size() == 0) {
+            if(estado==0)
+                estado=0;
             estado--; // Se a fila esta vazia, liberta o serviço
         } else { // Se nao,
             // vai buscar proximo cliente à fila de espera e
