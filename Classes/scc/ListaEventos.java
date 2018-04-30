@@ -25,6 +25,7 @@ public class ListaEventos extends LinkedList<Evento> {
         }
         // Coloca evento e1 na lista
         add(i, e1);
+        //if(this.size() <0) System.out.printf("\n%d\n", this.size());
     }
 
     // Método informativo apenas. Imprime o conteúdo da lista de eventos em cada instante

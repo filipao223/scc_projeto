@@ -29,7 +29,7 @@ public class Simulador {
         media_serv_geral = 30;
         dpEmpresa = 4;
         dpGeral = 8;
-        n_clientes = 100;
+        n_clientes = 1000;
         // Inicialização do relógio de simulação
         instante = 0;
         // Criação do serviço
@@ -38,8 +38,12 @@ public class Simulador {
 
         servicoEmpresarial.setOutroServico(servicoGeral);
         servicoGeral.setOutroServico(servicoEmpresarial);
+
         // Criação da lista de eventos
         lista = new ListaEventos(this);
+
+        servicoEmpresarial.setListaEventos(lista);
+        servicoGeral.setListaEventos(lista);
 
         // Agendamento da primeira chegada
         // Se não for feito, o simulador não tem eventos para simular
@@ -57,8 +61,9 @@ public class Simulador {
     // Método que actualiza os valores estatísticos do simulador
 
     // Método que insere o evento e1 na lista de eventos
-    void insereEvento(Evento e1) {
+    Evento insereEvento(Evento e1) {
         lista.insereEvento(e1);
+        return e1;
     }
 
     private void act_stats() {
