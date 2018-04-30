@@ -5,17 +5,13 @@ package scc;
 public class Cliente {
     
     private boolean geral;
-    private boolean empresarial;
     
     public Cliente(boolean tipo) {
-        this.geral = tipo;this.empresarial = !tipo;
+        this.geral = tipo;
     }
 
     public boolean isGeral() {
         return geral;
-    }
-    public boolean isEmpresarial() {
-        return empresarial;
     }
 
     public void setTipo(boolean tipo) {

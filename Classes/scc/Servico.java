@@ -11,8 +11,14 @@ public class Servico {
     private double temp_ult, soma_temp_esp, soma_temp_serv; // Variáveis para cálculos estatísticos
     private Vector<Cliente> fila; // Fila de espera do serviço
     private Simulador s; // Referencia para o simulador a que pertence o serviço
-    private boolean balcaoEmpresa, balcaoGeral;
+    private boolean balcaoEmpresa;
     private int numEmpregados;
+    private Servico outroServico;
+    private Vector<Cliente> currentClients;
+    private Cliente clientToRemove;
+
+    private ListaEventos listaEventos;
+    private Evento eventoReturn;
     
     // Construtor
     Servico(Simulador s, boolean type, int numEmpregados) {
@@ -23,41 +29,68 @@ public class Servico {
         atendidos = 0;  // Inicializaçao de variàveis
         soma_temp_esp = 0;
         soma_temp_serv = 0;
-        this.balcaoEmpresa = type;
-        this.balcaoGeral = !type;
+        currentClients = new Vector<Cliente>();
+        listaEventos = null;
+        eventoReturn = null;
+        this.balcaoEmpresa = type; //Porque cliente empresarial é do tipo false (0)
         this.numEmpregados = numEmpregados;
+
+        //System.out.println("Criado serviço " +(balcaoEmpresa?"empresarial":"geral")+ " com " + numEmpregados + " empregados.");
     }
 
     // Método que insere cliente (c) no serviço
-    public Cliente insereServico(Cliente c, GlobalVars globals) {
+    public void insereServico(Cliente c) {
         if (estado < numEmpregados) { // Se serviço livre,
             estado++;     // fica ocupado e
 
-            if(this.balcaoGeral && estado == numEmpregados) globals.updateBalcoes(true);
-            else if(this.balcaoGeral && estado < numEmpregados) globals.updateBalcoes(false);
+            currentClients.addElement(c);
+            clientToRemove = c;
 
-            // agenda saída do cliente c para daqui a s.getMedia_serv() instantes
-            s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.isGeral()), s, c.isGeral()));
-        } else {
-            if (this.balcaoEmpresa && c.isEmpresarial() && estado == numEmpregados && globals.balcoesLivres){
-                return c; //Se serviço empresarial ocupado e cliente for geral, é enviado para o balcao geral
+            // agenda saída do cliente c para daqui a s.getMedia_serv() instantes, dependendo do balcao onde se encontra
+            if(c.isGeral() && balcaoEmpresa){
+                eventoReturn = s.insereEvento(new Saida(s.getInstante() +25,s,c.isGeral()));
             }
-            fila.addElement(c); // Se serviço ocupado, o cliente vai para a fila de espera
+            else if(!c.isGeral() && !balcaoEmpresa){
+                eventoReturn = s.insereEvento(new Saida(s.getInstante() + 23,s,c.isGeral()));
+            }
+            else eventoReturn = s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.isGeral()), s, c.isGeral()));
+
+        } else {
+            if(outroServico.getEstado() < outroServico.getNumEmpregados()) {
+                outroServico.insereServico(c);
+            }
+
+            else if(this.balcaoEmpresa && !c.isGeral() && HaClientesGerais(currentClients)){
+                listaEventos.remove(eventoReturn);
+                outroServico.insereServico(currentClients.firstElement());
+
+                currentClients.add(c);
+                clientToRemove = c;
+
+                //Atendimento
+                eventoReturn = s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.isGeral()), s, c.isGeral()));
+            }
+
+            else fila.addElement(c); // Se serviço ocupado, o cliente vai para a fila de espera
         }
-        return null;
     }
+
+
 
     // Método que remove cliente do serviço
     public void removeServico() {
         atendidos++; // Regista que acabou de atender + 1 cliente
+        currentClients.remove(clientToRemove); //O cliente foi atendido, remove-o da lista dos atendidos atualmente
         if (fila.size() == 0) {
+            if(estado==0)
+                estado=0;
             estado--; // Se a fila esta vazia, liberta o serviço
         } else { // Se nao,
             // vai buscar proximo cliente à fila de espera e
                 Cliente c = (Cliente)fila.firstElement();
             fila.removeElementAt(0);
             // agenda a sua saida para daqui a s.getMedia_serv() instantes
-            s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.isGeral()), s, c.isGeral()));
+            eventoReturn = s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.isGeral()), s, c.isGeral()));
         }
     }
 
@@ -96,6 +129,24 @@ public class Servico {
     // Metodo que devolve o numero de clientes atendidos no serviço ate ao momento
     public int getAtendidos() {
         return atendidos;
+    }
+
+    public int getEstado(){return this.estado; }
+    public int getNumEmpregados(){return this.numEmpregados;}
+
+    public void setOutroServico(Servico servico){
+        this.outroServico = servico;
+    }
+
+    public void setListaEventos(ListaEventos lista){
+        this.listaEventos = lista;
+    }
+
+    public boolean HaClientesGerais(Vector<Cliente> lista){
+        for(Cliente c:lista){
+            if(c.isGeral()) return true;
+        }
+        return false;
     }
 
 }

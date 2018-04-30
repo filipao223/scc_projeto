@@ -28,7 +28,7 @@ public abstract class Evento {
     }
 
     // Método que executa um evento; a ser definido em cada tipo de evento
-    abstract Cliente executa(Servico s, GlobalVars globals);
+    abstract Cliente executa(Servico s);
 
     // Metodo que devolve o instante de ocorrencia do evento
     public double getInstante() {

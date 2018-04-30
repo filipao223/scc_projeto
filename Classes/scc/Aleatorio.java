@@ -4,7 +4,7 @@ package scc;
 // Apenas a distribuiçao exponencial negativa esta definida
 public class Aleatorio {
 
-    private static double vals_x2[] = new double[8];
+    private static double vals_x2[] = new double[12];
     // Gera um numero segundo uma distribuio exponencial negativa de media m
     static double exponencial (double m){
 		return (-m*Math.log(Math.random()));
@@ -34,7 +34,7 @@ public class Aleatorio {
         if(x2 < 0) x2 = 0;
 
         //Procura x2 já existente
-        for(int i=0; i<8; i+=2){
+        for(int i=0; i<12; i+=2){
             if(vals_x2[i] == stream && vals_x2[i+1] >= 0){
                 //Devolve o x2
                 double temp = x2;
@@ -44,7 +44,7 @@ public class Aleatorio {
         }
 
         //Guarda x2
-        for(int i=0; i<8; i+=2){
+        for(int i=0; i<12; i+=2){
             if(vals_x2[i] < 0){
                 vals_x2[i] = stream;
                 vals_x2[i+1] = x2;
