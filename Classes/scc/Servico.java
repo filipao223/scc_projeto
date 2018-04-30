@@ -13,6 +13,7 @@ public class Servico {
     private Simulador s; // Referencia para o simulador a que pertence o serviço
     private boolean balcaoEmpresa, balcaoGeral;
     private int numEmpregados;
+    private Servico passa;
     
     // Construtor
     Servico(Simulador s, boolean type, int numEmpregados) {
@@ -29,22 +30,19 @@ public class Servico {
     }
 
     // Método que insere cliente (c) no serviço
-    public Cliente insereServico(Cliente c, GlobalVars globals) {
+    public void insereServico(Cliente c, GlobalVars globals) {
         if (estado < numEmpregados) { // Se serviço livre,
             estado++;     // fica ocupado e
 
-            if(this.balcaoGeral && estado == numEmpregados) globals.updateBalcoes(true);
-            else if(this.balcaoGeral && estado < numEmpregados) globals.updateBalcoes(false);
 
             // agenda saída do cliente c para daqui a s.getMedia_serv() instantes
             s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.isGeral()), s, c.isGeral()));
         } else {
-            if (this.balcaoEmpresa && c.isEmpresarial() && estado == numEmpregados && globals.balcoesLivres){
-                return c; //Se serviço empresarial ocupado e cliente for geral, é enviado para o balcao geral
+            if(passa.estado < passa.numEmpregados) {
+                passa.insereServico(c, globals);
             }
             fila.addElement(c); // Se serviço ocupado, o cliente vai para a fila de espera
         }
-        return null;
     }
 
     // Método que remove cliente do serviço
@@ -96,6 +94,10 @@ public class Servico {
     // Metodo que devolve o numero de clientes atendidos no serviço ate ao momento
     public int getAtendidos() {
         return atendidos;
+    }
+
+    public void setPassa(Servico servico){
+        this.passa = servico;
     }
 
 }
