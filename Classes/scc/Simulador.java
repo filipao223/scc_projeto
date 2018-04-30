@@ -16,6 +16,7 @@ public class Simulador {
     // Lista de eventos - onde ficam registados todos os eventos que vão ocorrer na simulação
     // Cada simulador só tem uma
     private ListaEventos lista;
+    GlobalVars globals;
 
     boolean clienteGeral = true;
     boolean clienteEmpresarial = false;
@@ -42,8 +43,7 @@ public class Simulador {
         // Criação da lista de eventos
         lista = new ListaEventos(this);
 
-        servicoEmpresarial.setListaEventos(lista);
-        servicoGeral.setListaEventos(lista);
+        globals = new GlobalVars();
 
         // Agendamento da primeira chegada
         // Se não for feito, o simulador não tem eventos para simular
@@ -61,7 +61,7 @@ public class Simulador {
     // Método que actualiza os valores estatísticos do simulador
 
     // Método que insere o evento e1 na lista de eventos
-    Evento insereEvento(Evento e1) {
+    void insereEvento(Evento e1) {
         lista.insereEvento(e1);
         return e1;
     }
@@ -95,9 +95,10 @@ public class Simulador {
             instante = e1.getInstante();         // Actualiza relógio de simulação
             act_stats(); // Actualiza valores estatísticos
             if (e1.isGeral()) {
-                e1.executa(servicoGeral);               // Executa evento
+                e1.executa(servicoGeral, this.globals);               // Executa evento
             } else {
-                e1.executa(servicoEmpresarial);                 // Executa evento
+                c = e1.executa(servicoEmpresarial, this.globals);                 // Executa evento
+                if (c != null) e1.executa(servicoGeral, this.globals);
             }
         };
         relat();  // Apresenta resultados de simulação finais
