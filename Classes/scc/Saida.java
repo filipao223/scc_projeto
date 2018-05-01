@@ -1,6 +1,6 @@
 package scc;
 
-// Classe que representa a saída de um cliente. Deriva de Evento.
+// Classe que representa a sa�da de um cliente. Deriva de Evento.
 public class Saida extends Evento {
 
     //Construtor
@@ -8,16 +8,16 @@ public class Saida extends Evento {
         super(i, s, type);
     }
 
-    // Método que executa as acções correspondentes à saída de um cliente
+    // M�todo que executa as ac��es correspondentes � sa�da de um cliente
     void executa(Servico serv) {
-        // Retira cliente do serviço
+        // Retira cliente do servi�o
         serv.removeServico();
     }
 
-    // Método que descreve o evento.
+    // M�todo que descreve o evento.
     // Para ser usado na listagem da lista de eventos.
     public String toString() {
-        return "Saída em " + instante;
+        return "Sa�da em " + instante;
     }
 
 }

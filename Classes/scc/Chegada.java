@@ -8,15 +8,15 @@ public class Chegada extends Evento {
         super(i, s, type);
     }
 
-    // Método que executa as acções correspondentes à chegada de um cliente
+    // M�todo que executa as ac��es correspondentes � chegada de um cliente
     void executa(Servico serv) {
-        // Coloca cliente no serviço - na fila ou a ser atendido, conforme o caso
+        // Coloca cliente no servi�o - na fila ou a ser atendido, conforme o caso
         serv.insereServico(new Cliente(this.getType()));
         // Agenda nova chegada para daqui a Aleatorio.exponencial(s.media_cheg) instantes
         s.insereEvento(new Chegada(s.getInstante() + Aleatorio.exponencial(s.getMedia_cheg(this.getType())), s, this.getType()));
     }
 
-    // Método que descreve o evento.
+    // M�todo que descreve o evento.
     // Para ser usado na listagem da lista de eventos.
     public String toString() {
         return "Chegada em " + instante;

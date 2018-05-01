@@ -1,11 +1,11 @@
 package scc;
 
-// Classe de onde vão ser derivados todos os eventos.
-// Contém apenas os atributos e métodos comuns a todos os eventos.
-// Por isso é uma classe abstracta. Não haverá instâncias desta classe num simulador.
+// Classe de onde v�o ser derivados todos os eventos.
+// Cont�m apenas os atributos e m�todos comuns a todos os eventos.
+// Por isso � uma classe abstracta. N�o haver� inst�ncias desta classe num simulador.
 public abstract class Evento {
 
-    protected double instante;  // Instante de ocorrência do evento
+    protected double instante;  // Instante de ocorr�ncia do evento
     protected Simulador s;      // Simulador onde ocorre o evento
     private boolean type;
     
@@ -20,17 +20,17 @@ public abstract class Evento {
         return type;
     }
 
-    // Método que determina se o evento corrente ocorre primeiro, ou não, do que o evento e1
-    // Se sim, devolve true; se não, devolve false
-    // Usado para ordenar por ordem crescente de instantes de ocorrência a lista de eventos do simulador
+    // M�todo que determina se o evento corrente ocorre primeiro, ou n�o, do que o evento e1
+    // Se sim, devolve true; se n�o, devolve false
+    // Usado para ordenar por ordem crescente de instantes de ocorr�ncia a lista de eventos do simulador
     public boolean menor(Evento e1) {
         return (instante < e1.instante);
     }
 
-    // Método que executa um evento; a ser definido em cada tipo de evento
+    // M�todo que executa um evento; a ser definido em cada tipo de evento
     abstract void executa(Servico s);
 
-    // Método que devolve o instante de ocorrência do evento
+    // M�todo que devolve o instante de ocorr�ncia do evento
     public double getInstante() {
         return instante;
     }
