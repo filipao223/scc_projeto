@@ -255,6 +255,19 @@ public class Simulador {
         this.distrNormal = normal;
     }
 
+    public void updateStreams(boolean cheg, boolean cGeral, boolean bGeral, int newValue){
+        if(cheg){
+            if(cGeral) this.streamChegGeral = newValue;
+            else this.streamChegEmpr = newValue;
+        }
+        else{
+            if(cGeral && bGeral) this.streamServGeralGeral = newValue;
+            else if(cGeral && !bGeral) this.streamServGeralEmpr = newValue;
+            else if(!cGeral && bGeral) this.streamServEmprGeral = newValue;
+            else this.streamServEmprEmpr = newValue;
+        }
+    }
+
     //Este método devolve o tempo de serviço correto para um determinado cliente (c) num determinado balcao (balcaoGeral)
     //Toma em conta também qual a distribuição selecionada
     public double getTempo(Cliente c, boolean balcaoGeral){
