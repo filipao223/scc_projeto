@@ -5,16 +5,17 @@ import java.io.PrintStream;
 
 public class Simulador {
 
-    // Rel�gio de simula��o - vari�vel que cont�m o valor do tempo em cada instante
+    // Relógio de simulação - variàvel que contém o valor do tempo em cada instante
     private double instante;
-    // M�dias das distribui��es de chegadas e de atendimento no servi�o
+    // Médias das distribuições de chegadas e de atendimento no serviço
     private double media_cheg_empresariais, media_cheg_geral, media_serv_empresariais, media_serv_geral,dp_empresarial,dp_geral;
-    // N�mero de clientes que v�o ser atendidos
+    private double media_serv_empresariais_balcaoGeral, media_serv_geral_balcaoEmpresarial;
+    // Número de clientes que vão ser atendidos
     private int n_clientes;
-    // Servi�o - pode haver mais do que um num simulador
+    // Serviço - pode haver mais do que um num simulador
     private static Servico servicoEmpresarial, servicoGeral;
-    // Lista de eventos - onde ficam registados todos os eventos que v�o ocorrer na simula��o
-    // Cada simulador s� tem uma
+    // Lista de eventos - onde ficam registados todos os eventos que vão ocorrer na simulação
+    // Cada simulador só tem uma
     private ListaEventos lista;
 
     public boolean Geral;
@@ -34,17 +35,18 @@ public class Simulador {
 
     // Construtor
     public Simulador() {
-        // Inicializa��o de par�metros do simulador
+        // Inicialização de parâmetros do simulador
         media_cheg_empresariais = 35;
         media_cheg_geral = 12;
         media_serv_empresariais = 23;
+        media_serv_empresariais_balcaoGeral =
         media_serv_geral = 25;
 
         n_clientes = 1000;
         Geral = true;
-        // Inicializa��o do rel�gio de simula��o
+        // Inicialização do relógio de simulação
         instante = 0;
-        // Cria��o do servi�o
+        // Criação do serviço
         servicoEmpresarial = new Servico(this, !Geral, 1);
         servicoGeral = new Servico(this, Geral, 2);
 
@@ -60,7 +62,7 @@ public class Simulador {
         // Criaçãoo da lista de eventos
         lista = new ListaEventos(this);
         // Agendamento da primeira chegada
-        // Se n�o for feito, o simulador n�o tem eventos para simular
+        // Se não for feito, o simulador não tem eventos para simular
         insereEvento(new Chegada(instante, this, false));
         insereEvento(new Chegada(instante, this, true));
     }
@@ -71,9 +73,9 @@ public class Simulador {
         // põe-o em marcha
         //s.executa();
     }
-    // M�todo que actualiza os valores estat�sticos do simulador
+    // Método que actualiza os valores estatísticos do simulador
 
-    // M�todo que insere o evento e1 na lista de eventos
+    // Método que insere o evento e1 na lista de eventos
     void insereEvento(Evento e1) {
         lista.insereEvento(e1);
     }
@@ -87,7 +89,7 @@ public class Simulador {
         servicoGeral.act_stats();
     }
 
-    // M�todo que apresenta os resultados de simula��o finais
+    // Método que apresenta os resultados de simulação finais
     private void relat() {
         System.out.println();
         System.out.println("------- Resultados finais -------");
@@ -100,15 +102,15 @@ public class Simulador {
         servicoGeral.relat();
     }
 
-    // M�todo executivo do simulador
+    // Método executivo do simulador
     public void executa() {
         Evento e1;
-        // Enquanto n�o atender todos os clientes
+        // Enquanto não atender todos os clientes
         while (servicoEmpresarial.getAtendidos() + servicoGeral.getAtendidos() < n_clientes) {
-            //	lista.print();  // Mostra lista de eventos - desnecess�rio; � apenas informativo
-            e1 = (Evento) (lista.removeFirst());  // Retira primeiro evento (� o mais iminente) da lista de eventos
-            instante = e1.getInstante();         // Actualiza rel�gio de simula��o
-            act_stats(); // Actualiza valores estat�sticos
+            //	lista.print();  // Mostra lista de eventos - desnecessário; é apenas informativo
+            e1 = (Evento) (lista.removeFirst());  // Retira primeiro evento (é o mais iminente) da lista de eventos
+            instante = e1.getInstante();         // Actualiza relógio de simulação
+            act_stats(); // Actualiza valores estatísticos
             if (e1.getType() == !Geral) {
                 e1.executa(servicoEmpresarial);                 // Executa evento
             } else {
@@ -119,12 +121,12 @@ public class Simulador {
         saveResultsString();
     }
 
-    // M�todo que devolve o instante de simula��o corrente
+    // Método que devolve o instante de simulação corrente
     public double getInstante() {
         return instante;
     }
 
-    // M�todo que devolve a m�dia dos intervalos de chegada
+    // Método que devolve a média dos intervalos de chegada
     public double getMedia_cheg(boolean type) {
         if (type == !Geral) {
             return media_cheg_empresariais;
@@ -133,12 +135,27 @@ public class Simulador {
         }
     }
 
-    // M�todo que devolve a m�dia dos tempos de servi�o
+    // Método que devolve a média dos tempos de serviço
     public double getMedia_serv(boolean type) {
         if (type == !Geral) {
             return media_serv_empresariais;
         } else {
             return media_serv_geral;
+        }
+    }
+
+    public double getMediaServ(Cliente c, boolean balcaoGeral){
+        if(c.getTipo() == true){
+            if(balcaoGeral){
+                return media_serv_geral;
+            }
+            else return media_serv_geral_balcaoEmpresarial;
+        }
+        else{
+            if(balcaoGeral){
+                return media_serv_empresariais_balcaoGeral;
+            }
+            else return  media_serv_empresariais;
         }
     }
 

@@ -1,7 +1,7 @@
 package scc;
 
-// Classe para gera��o de n�meros aleat�rios segundos v�rias distribui��es
-// Apenas a distribui��o exponencial negativa est� definida
+// Classe para geração de números aleatórios segundos vàrias distribuições
+// Apenas a distribuição exponencial negativa está definida
 public class Aleatorio {
 
     private static double vals_x2[] = new double[12];
@@ -34,7 +34,7 @@ public class Aleatorio {
         if(x1 < 0) x1 = 0;
         if(x2 < 0) x2 = 0;
 
-        //Procura x2 jÃ¡ existente
+        //Procura x2 já existente
         for(int i=0; i<12; i+=2){
             if(vals_x2[i] == stream && vals_x2[i+1] >= 0){
                 //Devolve o x2
