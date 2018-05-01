@@ -121,6 +121,19 @@ public class Simulador {
         saveResultsString();
     }
 
+    public double getAleatoriadade(boolean distribuicao, double m,double dp, int stream){
+        double valor;
+        if (distribuicao == true){
+            valor = Aleatorio.normal(m,dp,stream);
+            System.out.println("normal");
+        }
+        else{
+            valor = Aleatorio.exponencial(m);
+            System.out.println("exponencial");
+        }
+        return valor;
+    }
+
     // Método que devolve o instante de simulação corrente
     public double getInstante() {
         return instante;
@@ -289,4 +302,5 @@ public class Simulador {
     public boolean isDistrNormal() {
         return distrNormal;
     }
+
 }

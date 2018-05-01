@@ -38,8 +38,8 @@ public class Servico {
             //TRUE É GERAL
             if (c.getTipo() == true && outroServico.estado < outroServico.numEmpregados) { //Quando o tipo é geral, e há espaço na empresarial
                     outroServico.estado++;
-                    c.setEvento(new Saida(s.getTempo(c, false), s, c.getTipo()));
-                    //c.setEvento(new Saida(s.getInstante() + Aleatorio.normal(s.getMedia_serv(false), s.getDp(false), 2), s, false));
+                    //c.setEvento(new Saida(s.getTempo(c, false), s, c.getTipo()));
+                    c.setEvento(new Saida(s.getInstante() + s.getAleatoriadade(s.isDistrNormal(),s.getMedia_serv(false), s.getDp(false), 2), s, false));
                     outroServico.current = c;
                     s.insereEvento(c.getEvento());
 
@@ -49,8 +49,8 @@ public class Servico {
 
             //TRUE É GERAL
             else if (c.getTipo() == false && s.getServicoEmpresarial().estado == 0) { //Quando o tipo é empresarial,está a voltar à fila empresarial e n tem gente
-                s.insereEvento(new Saida(s.getTempo(c, false), s, c.getTipo()));
-                //s.insereEvento(new Saida(s.getInstante() + Aleatorio.normal(s.getMedia_serv(false), s.getDp(false), 3), s, c.getTipo()));
+                //s.insereEvento(new Saida(s.getTempo(c, false), s, c.getTipo()));
+                s.insereEvento(new Saida(s.getInstante() +s.getAleatoriadade(s.isDistrNormal(),s.getMedia_serv(false), s.getDp(false), 3), s, c.getTipo()));
 
             }else if (c.getTipo() == false && s.getServicoEmpresarial().estado != 0) { //Quando o tipo é empresarial,está a voltar e a fila está com gente
 
@@ -59,8 +59,8 @@ public class Servico {
                     outroServico.fila.add(0, current);
                     this.current = c;
                     //JÁ TE DISSO QUE O TRUE ERA GERAL
-                    s.insereEvento(new Saida(s.getTempo(c, true), s, c.getTipo()));
-                    //s.insereEvento(new Saida(s.getInstante() + Aleatorio.normal(s.getMedia_serv(c.getTipo()), s.getDp(c.getTipo()), 4), s, c.getTipo()));
+                    //s.insereEvento(new Saida(s.getTempo(c, true), s, c.getTipo()));
+                    s.insereEvento(new Saida(s.getInstante() + s.getAleatoriadade(s.isDistrNormal(),s.getMedia_serv(c.getTipo()), s.getDp(c.getTipo()), 4), s, c.getTipo()));
 
                 } else if (s.getServicoEmpresarial().current != null && s.getServicoEmpresarial().current.getTipo() == false) { //Caso em que n interrompe a fila empresarial
                     this.fila.add(c);
@@ -79,8 +79,8 @@ public class Servico {
             Cliente c = (Cliente) fila.firstElement();
             fila.removeElementAt(0);
             // agenda a sua saida para daqui a s.getMedia_serv() instantes
-            s.insereEvento(new Saida(s.getTempo(c, c.getTipo()), s, c.getTipo()));
-            //s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.getTipo()), s, c.getTipo()));
+            //s.insereEvento(new Saida(s.getTempo(c, c.getTipo()), s, c.getTipo()));
+            s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.getTipo()), s, c.getTipo()));
         }
     }
 
