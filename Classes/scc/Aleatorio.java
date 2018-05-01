@@ -10,7 +10,6 @@ public class Aleatorio {
         return (-m*Math.log(Math.random()));
     }
 
-    static double[] savedX2 = new double[99];
     static double normal (double m, double dp,int stream){
         double u1, u2;
         double v1=0, v2=0, w=2;

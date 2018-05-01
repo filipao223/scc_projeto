@@ -10,6 +10,7 @@ public class Simulador {
     // Médias das distribuições de chegadas e de atendimento no serviço
     private double media_cheg_empresariais, media_cheg_geral, media_serv_empresariais, media_serv_geral,dp_empresarial,dp_geral;
     private double media_serv_empresariais_balcaoGeral, media_serv_geral_balcaoEmpresarial;
+    private double dp_geral_balcaoEmpresarial,dp_empresarial_balcaoGeral;
     // Número de clientes que vão ser atendidos
     private int n_clientes;
     // Serviço - pode haver mais do que um num simulador
@@ -39,8 +40,11 @@ public class Simulador {
         media_cheg_empresariais = 35;
         media_cheg_geral = 12;
         media_serv_empresariais = 23;
-        media_serv_empresariais_balcaoGeral =
+        media_serv_empresariais_balcaoGeral = 23;
+        media_serv_geral_balcaoEmpresarial = 25;
         media_serv_geral = 25;
+        dp_empresarial_balcaoGeral = 5;
+        dp_geral_balcaoEmpresarial = 5;
 
         n_clientes = 1000;
         Geral = true;
@@ -121,15 +125,32 @@ public class Simulador {
         saveResultsString();
     }
 
+    public double getDpTroca(boolean Geral){
+        if(Geral){
+            return dp_empresarial_balcaoGeral;
+        }
+        else{
+            return dp_geral_balcaoEmpresarial;
+        }
+    }
+
+    public double getMediaTroca(boolean Geral){
+        if(Geral){
+            return media_serv_empresariais_balcaoGeral;
+        }
+        else{
+            return media_serv_geral_balcaoEmpresarial;
+        }
+    }
+
+
     public double getAleatoriadade(boolean distribuicao, double m,double dp, int stream){
         double valor;
         if (distribuicao == true){
             valor = Aleatorio.normal(m,dp,stream);
-            System.out.println("normal");
         }
         else{
             valor = Aleatorio.exponencial(m);
-            System.out.println("exponencial");
         }
         return valor;
     }
@@ -183,6 +204,10 @@ public class Simulador {
 
     public Servico getServicoEmpresarial() {
         return servicoEmpresarial;
+    }
+
+    public Servico getServicoGeral() {
+        return servicoGeral;
     }
 
     public void updateMedia_cheg(boolean geral, double newValue){

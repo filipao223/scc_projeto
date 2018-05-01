@@ -49,7 +49,6 @@ public class Interface extends JFrame {
 
       labelChegada = new JLabel("Chegada:"); add(labelChegada);
 
-
       labelMediaChegGeral = new JLabel("Média Geral"); add(labelMediaChegGeral);
 
       textMediaChegGeral = new JTextField("12"); add(textMediaChegGeral);
