@@ -201,7 +201,12 @@ public class Simulador {
 
     public double getTempo(Cliente c, boolean balcaoGeral){
         if(c.isGeral() && balcaoGeral){ //Cliente geral no balcao geral
-            return getInstante() + getMedia_serv(c.isGeral(), balcaoGeral); //Media geral no balcao geral
+            if(this.distrExponencial){
+                return getInstante() + Aleatorio.exponencial(getMedia_serv(c.isGeral(), balcaoGeral));
+            }
+            else
+                return getInstante() + Aleatorio.normal();
+                return getInstante() + getMedia_serv(c.isGeral(), balcaoGeral); //Media geral no balcao geral
         }
         else if(c.isGeral() && !balcaoGeral){ //Cliente geral no balcao empresarial
             return getInstante() + getMedia_serv(c.isGeral(), !balcaoGeral); //Media geral no balcao empresarial
@@ -212,6 +217,10 @@ public class Simulador {
         else{ //Cliente empresarial no balcao empresarial
             return getInstante() + getMedia_serv(!c.isGeral(), !balcaoGeral); //Media empresarial no balcao empresarial
         }
+    }
+
+    public Servico getServicoEmpresarial(){
+        return servicoEmpresarial;
     }
 
     public void saveResultsString(){

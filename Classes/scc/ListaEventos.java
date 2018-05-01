@@ -28,6 +28,15 @@ public class ListaEventos extends LinkedList<Evento> {
         //if(this.size() <0) System.out.printf("\n%d\n", this.size());
     }
 
+    public void removeEvento(Evento e1){
+        for(int i=0; i<size(); i++) {
+            if(get(i) == e1) {
+                remove(i);
+                break;
+            }
+        }
+    }
+
     // Método informativo apenas. Imprime o conteúdo da lista de eventos em cada instante
     public void print() {
         int i;

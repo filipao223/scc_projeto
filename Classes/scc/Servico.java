@@ -18,6 +18,8 @@ public class Servico {
 
     private ListaEventos listaEventos;
     private Evento eventoReturn;
+
+
     
     // Construtor
     Servico(Simulador s, boolean type, int numEmpregados) {
@@ -42,22 +44,48 @@ public class Servico {
         if (estado < numEmpregados) { // Se serviço livre,
             estado++;     // fica ocupado e
 
-            if(c.isGeral() && tipoBalcao) //Lista de clientes gerais no balcao empresarial
-                currentGeralClients.addElement(c);
+            //if(c.isGeral() && tipoBalcao) //Lista de clientes gerais no balcao empresarial
+                //currentGeralClients.addElement(c);
 
             // agenda saída do cliente c para daqui a s.getTempo instantes, dependendo do balcao onde se encontra
             //tipoBalcao é true se for um balcao geral e false se for um empresarial
             eventoReturn = s.insereEvento(new Saida(s.getTempo(c, tipoBalcao),s, tipoBalcao));
 
         } else {
-            if(outroServico.getEstado() < outroServico.getNumEmpregados()) {
+            if(c.isGeral() && outroServico.getEstado() < outroServico.getNumEmpregados()) {
                 //if(!tipoBalcao) System.out.println("Passou um cliente geral para balcao empresa");
-                outroServico.insereServico(c);
+                outroServico.estado++;
+                outroServico.currentGeralClients.add(c);
+                s.insereEvento(new Saida(s.getTempo(c, false), s, c.isGeral()));
             }
 
-            else if(this.tipoBalcao && !c.isGeral() && !currentGeralClients.isEmpty()){
-                listaEventos.remove(eventoReturn);
-                outroServico.fila.add(currentGeralClients.firstElement());
+            else if(c.isGeral() && outroServico.estado == outroServico.numEmpregados){
+                this.fila.add(c);
+            }
+
+            else if(!c.isGeral() && s.getServicoEmpresarial().estado==0){
+                s.insereEvento(new Saida(s.getTempo(c, false),s, false));
+            }
+
+            else if(!c.isGeral() && s.getServicoEmpresarial().estado !=0){
+
+                if (!s.getServicoEmpresarial().currentGeralClients.isEmpty()) { //Caso em que interrompe a fila empresarial
+                    listaEventos.removeEvento(s.getServicoEmpresarial().eventoReturn);
+                    outroServico.fila.add(0, s.getServicoEmpresarial().currentGeralClients.firstElement());
+                    s.getServicoEmpresarial().currentGeralClients.removeElementAt(0);
+
+
+                    //JÁ TE DISSO QUE O TRUE ERA GERAL
+                    s.insereEvento(new Saida(s.getTempo(c, true), s, c.isGeral()));
+
+                } else { //Caso em que n interrompe a fila empresarial
+                    this.fila.add(c);
+                }
+            }
+
+            /*else if(this.tipoBalcao && !c.isGeral() && !currentGeralClients.isEmpty()){
+                listaEventos.removeEvento(eventoReturn);
+                outroServico.fila.add(0,currentGeralClients.firstElement());
 
                 currentGeralClients.removeElementAt(0);
                 this.insereServico(c);
@@ -70,7 +98,7 @@ public class Servico {
                 outroServico.fila.add(c);
             }
 
-            else fila.addElement(c); // Se serviço ocupado, o cliente vai para a fila de espera
+            else fila.addElement(c); // Se serviço ocupado, o cliente vai para a fila de espera*/
         }
     }
 
@@ -82,7 +110,7 @@ public class Servico {
             estado--; // Se a fila esta vazia, liberta o serviço
         } else { // Se nao,
             // vai buscar proximo cliente à fila de espera e
-                Cliente c = (Cliente)fila.firstElement();
+            Cliente c = (Cliente)fila.firstElement();
             fila.removeElementAt(0);
             // agenda a sua saida para daqui a s.getMedia_serv() instantes
             eventoReturn = s.insereEvento(new Saida(s.getTempo(c, tipoBalcao), s, tipoBalcao));
