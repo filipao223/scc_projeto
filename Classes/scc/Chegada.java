@@ -4,10 +4,13 @@ package scc;
 public class Chegada extends Evento {
     
     int stream;
+    boolean exponencial;
+
     //Construtor
-    Chegada(double i, Simulador s, boolean geral) {
+    Chegada(double i, Simulador s, boolean geral, boolean exponencial) {
         super(i, s, geral);
         this.stream = 2;
+        this.exponencial = exponencial;
     }
 
     // Metodo que executa as acçoes correspondentes a chegada de um cliente
@@ -18,7 +21,11 @@ public class Chegada extends Evento {
 
         // Agenda nova chegada para daqui a Aleatorio.exponencial(s.media_cheg) instantes
         //s.insereEvento(new Chegada(s.getInstante() + Aleatorio.exponencial(s.getMedia_cheg(this.getTipo())), s, this.getTipo()));
-        s.insereEvento(new Chegada(s.getInstante() + Aleatorio.normal(stream,s.getMedia_cheg(this.isBalcaoGeral()),s.getDP(this.isBalcaoGeral())), s, this.isBalcaoGeral()));
+        if(exponencial)
+            s.insereEvento(new Chegada(s.getInstante() + Aleatorio.exponencial(s.getMedia_cheg(this.isBalcaoGeral())), s, this.isBalcaoGeral(), true));
+        else
+            s.insereEvento(new Chegada(s.getInstante() + Aleatorio.normal(stream,s.getMedia_cheg(this.isBalcaoGeral()),s.getDP(this.isBalcaoGeral())), s, this.isBalcaoGeral(), false));
+
         return null;
     }
 

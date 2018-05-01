@@ -18,7 +18,7 @@ public class Saida extends Evento {
     // Método que descreve o evento.
     // Para ser usado na listagem da lista de eventos.
     public String toString() {
-        return "Sa�da em " + instante;
+        return "Saída em " + instante;
     }
 
 }

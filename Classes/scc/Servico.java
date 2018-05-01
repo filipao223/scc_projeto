@@ -11,7 +11,7 @@ public class Servico {
     private double temp_ult, soma_temp_esp, soma_temp_serv; // Variáveis para cálculos estatísticos
     private Vector<Cliente> fila; // Fila de espera do serviço
     private Simulador s; // Referencia para o simulador a que pertence o serviço
-    private boolean balcaoEmpresa;
+    private boolean tipoBalcao; //Se true -> empresa, false -> geral
     private int numEmpregados;
     private Servico outroServico;
     private Vector<Cliente> currentGeralClients;
@@ -31,10 +31,10 @@ public class Servico {
         currentGeralClients = new Vector<Cliente>();
         listaEventos = null;
         eventoReturn = null;
-        this.balcaoEmpresa = type; //Porque cliente empresarial é do tipo false (0)
+        this.tipoBalcao = type; //Porque cliente empresarial é do tipo false (0)
         this.numEmpregados = numEmpregados;
 
-        //System.out.println("Criado serviço " +(balcaoEmpresa?"empresarial":"geral")+ " com " + numEmpregados + " empregados.");
+        //System.out.println("Criado serviço " +(tipoBalcao?"empresarial":"geral")+ " com " + numEmpregados + " empregados.");
     }
 
     // Método que insere cliente (c) no serviço
@@ -42,28 +42,20 @@ public class Servico {
         if (estado < numEmpregados) { // Se serviço livre,
             estado++;     // fica ocupado e
 
-            if(c.isGeral() && balcaoEmpresa) //Lista de clientes gerais no balcao empresarial
+            if(c.isGeral() && tipoBalcao) //Lista de clientes gerais no balcao empresarial
                 currentGeralClients.addElement(c);
 
-            // agenda saída do cliente c para daqui a s.getMedia_serv() instantes, dependendo do balcao onde se encontra
-            if(c.isGeral() && balcaoEmpresa){
-                eventoReturn = s.insereEvento(new Saida(s.getInstante() +25,s,balcaoEmpresa));
-            }
-            else if(!c.isGeral() && !balcaoEmpresa){
-                eventoReturn = s.insereEvento(new Saida(s.getInstante() + 23,s,balcaoEmpresa));
-            }
-            else if (c.isGeral() && !balcaoEmpresa)
-                eventoReturn = s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.isGeral()), s, balcaoEmpresa));
-
-            else eventoReturn = s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.isGeral()), s, balcaoEmpresa));
+            // agenda saída do cliente c para daqui a s.getTempo instantes, dependendo do balcao onde se encontra
+            //tipoBalcao é true se for um balcao geral e false se for um empresarial
+            eventoReturn = s.insereEvento(new Saida(s.getTempo(c, tipoBalcao),s, tipoBalcao));
 
         } else {
             if(outroServico.getEstado() < outroServico.getNumEmpregados()) {
-                //if(!balcaoEmpresa) System.out.println("Passou um cliente geral para balcao empresa");
+                //if(!tipoBalcao) System.out.println("Passou um cliente geral para balcao empresa");
                 outroServico.insereServico(c);
             }
 
-            else if(this.balcaoEmpresa && !c.isGeral() && !currentGeralClients.isEmpty()){
+            else if(this.tipoBalcao && !c.isGeral() && !currentGeralClients.isEmpty()){
                 listaEventos.remove(eventoReturn);
                 outroServico.fila.add(currentGeralClients.firstElement());
 
@@ -71,10 +63,10 @@ public class Servico {
                 this.insereServico(c);
 
                 //Atendimento
-                eventoReturn = s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.isGeral()), s, balcaoEmpresa));
+                eventoReturn = s.insereEvento(new Saida(s.getTempo(c, tipoBalcao), s, tipoBalcao));
             }
 
-            else if(!balcaoEmpresa && !c.isGeral()){
+            else if(!tipoBalcao && !c.isGeral()){
                 outroServico.fila.add(c);
             }
 
@@ -93,7 +85,7 @@ public class Servico {
                 Cliente c = (Cliente)fila.firstElement();
             fila.removeElementAt(0);
             // agenda a sua saida para daqui a s.getMedia_serv() instantes
-            eventoReturn = s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.isGeral()), s, balcaoEmpresa));
+            eventoReturn = s.insereEvento(new Saida(s.getTempo(c, tipoBalcao), s, tipoBalcao));
         }
     }
 
@@ -157,5 +149,9 @@ public class Servico {
             if(c.isGeral()) return c;
         }
         return null;
+    }
+
+    public void updateFunc(int value){
+        this.numEmpregados = value;
     }
 }
