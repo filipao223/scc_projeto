@@ -1,5 +1,8 @@
 package scc;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 public class Simulador {
 
     // Relógio de simulação - variàvel que contém o valor do tempo em cada instante
@@ -28,6 +31,8 @@ public class Simulador {
     private int streamServEmprGeral;
     private int streamServEmprEmpr;
 
+    ByteArrayOutputStream resultados;
+
     // Construtor
     public Simulador() {
         // Inicialização de parâmetros do simulador
@@ -52,6 +57,8 @@ public class Simulador {
         //Variaveis interface
         distrNormal = true;
 
+        Interface gui = new Interface(this);
+
         // Criaçãoo da lista de eventos
         lista = new ListaEventos(this);
         // Agendamento da primeira chegada
@@ -64,7 +71,7 @@ public class Simulador {
         // Cria um simulador e
         Simulador s = new Simulador();
         // põe-o em marcha
-        s.executa();
+        //s.executa();
     }
     // Método que actualiza os valores estatísticos do simulador
 
@@ -111,6 +118,7 @@ public class Simulador {
             }
         }
         relat();  // Apresenta resultados de simulação finais
+        saveResultsString();
     }
 
     // Método que devolve o instante de simulação corrente
@@ -164,6 +172,51 @@ public class Simulador {
         return servicoEmpresarial;
     }
 
+    public void updateMedia_cheg(boolean geral, double newValue){
+        if(geral){
+            this.media_cheg_geral = newValue;
+        }
+        else this.media_cheg_empresariais = newValue;
+    }
+
+    public void updateDP(boolean geral, double newValue){
+        if(geral){
+            this.dp_geral = newValue;
+        }
+        else
+            this.dp_empresarial = newValue;
+    }
+
+    public void updateMedia_serv(boolean geral, boolean balcaoGeral, double newValue){
+        if(geral){
+            if(balcaoGeral){
+                this.media_serv_geral = newValue;
+            }
+            else this.media_serv_geral_balcaoEmpresarial = newValue;
+        }
+        else{
+            if(balcaoGeral){
+                this.media_serv_empresariais_balcaoGeral = newValue;
+            }
+            else this.media_serv_empresariais = newValue;
+        }
+    }
+
+    public void updateNumFunc(boolean balcaoGeral, int newValue){
+        if(balcaoGeral){
+            servicoGeral.updateNumFunc(newValue);
+        }
+        else servicoEmpresarial.updateNumFunc(newValue);
+    }
+
+    public void updateClientes(int newValue){
+        this.n_clientes = newValue;
+    }
+
+    public void updateDistr(boolean normal){
+        this.distrNormal = normal;
+    }
+
     //Este método devolve o tempo de serviço correto para um determinado cliente (c) num determinado balcao (balcaoGeral)
     //Toma em conta também qual a distribuição selecionada
     public double getTempo(Cliente c, boolean balcaoGeral){
@@ -196,5 +249,31 @@ public class Simulador {
             else
                 return getInstante() + Aleatorio.exponencial(getMediaServ(c, balcaoGeral));
         }
+    }
+
+    public void saveResultsString(){
+        resultados = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(resultados);
+
+        PrintStream old = System.out;
+        System.setOut(ps);
+
+        System.out.println();
+        System.out.println("------- Resultados finais -------");
+        System.out.println();
+        servicoEmpresarial.relat();
+
+        System.out.println();
+        System.out.println("------- Resultados finais -------");
+        System.out.println();
+        servicoGeral.relat();
+
+        // Put things back
+        System.out.flush();
+        System.setOut(old);
+    }
+
+    public boolean isDistrNormal() {
+        return distrNormal;
     }
 }

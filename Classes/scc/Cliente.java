@@ -1,7 +1,7 @@
 package scc;
 
 // Classe que representa um cliente
-// Como s�o indistintos neste exemplo, est� vazia
+// Como são indistintos neste exemplo, está vazia
 public class Cliente {
     
     private boolean type;
