@@ -47,8 +47,8 @@ public class Interface extends JFrame {
       setLocation(100, 100);
       setVisible(true);
       setDefaultCloseOperation(3);
-      setLayout(new FlowLayout());
 
+      setLayout(new GridLayout(12, 0, 4, 4));
 
       labelChegada = new JLabel("Chegada:"); add(labelChegada);
 
@@ -104,61 +104,6 @@ public class Interface extends JFrame {
       textNumCliente = new JTextField("1000"); this.add(textNumCliente);
       textNumCliente.setPreferredSize(new Dimension(30,20));
 
-      distrComboBox = new JComboBox(new String[] {"Normal", "Exponencial"}); this.add(distrComboBox);
-      distrComboBox.addActionListener(new ActionListener() {
-          @Override
-          public void actionPerformed(ActionEvent e) {
-              String distr = (String)distrComboBox.getSelectedItem();
-              if(distr.equalsIgnoreCase("Normal"))
-                  s.updateDistr(false);
-              else
-                  s.updateDistr(true);
-          }
-      });
-
-    updateValues = new JButton("Update");
-    add(updateValues);
-    updateValues.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            try {
-                s.updateMedia_cheg(true, Double.parseDouble(textMediaChegGeral.getText()));
-                s.updateMedia_cheg(false, Double.parseDouble(textMediaChegEmpr.getText()));
-                s.updateDP(true, Double.parseDouble(textDPGeral.getText()));
-                s.updateDP(false, Double.parseDouble(textDPEmpre.getText()));
-                s.updateMedia_serv(true, true, Double.parseDouble(textMediaServGeralGeral.getText()));
-                s.updateMedia_serv(true, false, Double.parseDouble(textMediaServGeralEmpr.getText()));
-                s.updateMedia_serv(false, true, Double.parseDouble(textMediaServEmprGeral.getText()));
-                s.updateMedia_serv(false, false, Double.parseDouble(textMediaServEmprEmpr.getText()));
-                s.updateNumFunc(true, Integer.parseInt(textFuncGeral.getText()));
-                s.updateNumFunc(false, Integer.parseInt(textFuncEmpr.getText()));
-                s.updateClientes(Integer.parseInt(textNumCliente.getText()));
-                s.updateStreams(true, true, true, Integer.parseInt(TstreamChegGeral.getText()));
-                s.updateStreams(true, false, true, Integer.parseInt(TstreamChegEmpr.getText()));
-                s.updateStreams(false, true, true, Integer.parseInt(TstreamServGeralGeral.getText()));
-                s.updateStreams(false, true, false, Integer.parseInt(TstreamServGeralEmpr.getText()));
-                s.updateStreams(false, false, true, Integer.parseInt(TstreamServEmprGeral.getText()));
-                s.updateStreams(false, false, false, Integer.parseInt(TstreamServEmprEmpr.getText()));
-
-            } catch(Exception ex) {
-                JOptionPane.showMessageDialog(null, (new StringBuilder()).append("Erro: ").append(ex).toString(), "Error", 0);
-            }
-        }
-    });
-
-    startSimulacao = new JButton("Iniciar");
-    add(startSimulacao);
-    startSimulacao.addActionListener(new ActionListener() {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            //s.insereEvento(new Chegada(s.getInstante(), s, !s.Geral));
-            //s.insereEvento(new Chegada(s.getInstante(), s, s.Geral));
-            //s.printSimConfig();
-            s.executa();
-            Resultados result = new Resultados(s);
-        }
-    });
-
     LstreamInfo = new JLabel("Streams:"); this.add(LstreamInfo);
 
     LstreamChegGeral = new JLabel("Cheg Geral"); this.add(LstreamChegGeral);
@@ -185,6 +130,61 @@ public class Interface extends JFrame {
       TstreamServEmprEmpr = new JTextField("6"); this.add(TstreamServEmprEmpr);
       TstreamServEmprEmpr.setPreferredSize(new Dimension(30,20));
 
+      distrComboBox = new JComboBox(new String[] {"Normal", "Exponencial"}); this.add(distrComboBox);
+      distrComboBox.addActionListener(new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+              String distr = (String)distrComboBox.getSelectedItem();
+              if(distr.equalsIgnoreCase("Normal"))
+                  s.updateDistr(false);
+              else
+                  s.updateDistr(true);
+          }
+      });
+
+      updateValues = new JButton("Update");
+      add(updateValues);
+      updateValues.addActionListener(new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+              try {
+                  s.updateMedia_cheg(true, Double.parseDouble(textMediaChegGeral.getText()));
+                  s.updateMedia_cheg(false, Double.parseDouble(textMediaChegEmpr.getText()));
+                  s.updateDP(true, Double.parseDouble(textDPGeral.getText()));
+                  s.updateDP(false, Double.parseDouble(textDPEmpre.getText()));
+                  s.updateMedia_serv(true, true, Double.parseDouble(textMediaServGeralGeral.getText()));
+                  s.updateMedia_serv(true, false, Double.parseDouble(textMediaServGeralEmpr.getText()));
+                  s.updateMedia_serv(false, true, Double.parseDouble(textMediaServEmprGeral.getText()));
+                  s.updateMedia_serv(false, false, Double.parseDouble(textMediaServEmprEmpr.getText()));
+                  s.updateNumFunc(true, Integer.parseInt(textFuncGeral.getText()));
+                  s.updateNumFunc(false, Integer.parseInt(textFuncEmpr.getText()));
+                  s.updateClientes(Integer.parseInt(textNumCliente.getText()));
+                  s.updateStreams(true, true, true, Integer.parseInt(TstreamChegGeral.getText()));
+                  s.updateStreams(true, false, true, Integer.parseInt(TstreamChegEmpr.getText()));
+                  s.updateStreams(false, true, true, Integer.parseInt(TstreamServGeralGeral.getText()));
+                  s.updateStreams(false, true, false, Integer.parseInt(TstreamServGeralEmpr.getText()));
+                  s.updateStreams(false, false, true, Integer.parseInt(TstreamServEmprGeral.getText()));
+                  s.updateStreams(false, false, false, Integer.parseInt(TstreamServEmprEmpr.getText()));
+
+              } catch(Exception ex) {
+                  JOptionPane.showMessageDialog(null, (new StringBuilder()).append("Erro: ").append(ex).toString(), "Error", 0);
+              }
+          }
+      });
+
+      startSimulacao = new JButton("Iniciar");
+      add(startSimulacao);
+      startSimulacao.addActionListener(new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+              //s.insereEvento(new Chegada(s.getInstante(), s, !s.Geral));
+              //s.insereEvento(new Chegada(s.getInstante(), s, s.Geral));
+              //s.printSimConfig();
+              s.executa();
+              Resultados result = new Resultados(s);
+          }
+      });
+
     this.pack();
   }
 }
@@ -193,7 +193,7 @@ class Resultados extends JFrame{
     private JTextArea textArea;
 
     public Resultados(Simulador s){
-        setPreferredSize(new Dimension(800, 350));
+        setSize(new Dimension(350,400));
         setTitle("Simulador SCC");
         setLocation(100, 100);
         setVisible(true);
