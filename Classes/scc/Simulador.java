@@ -6,6 +6,7 @@ public class Simulador {
     private double instante;
     // Médias das distribuições de chegadas e de atendimento no serviço
     private double media_cheg_empresariais, media_cheg_geral, media_serv_empresariais, media_serv_geral,dp_empresarial,dp_geral;
+    private double media_serv_empresariais_balcaoGeral, media_serv_geral_balcaoEmpresarial;
     // Número de clientes que vão ser atendidos
     private int n_clientes;
     // Serviço - pode haver mais do que um num simulador
@@ -16,12 +17,24 @@ public class Simulador {
 
     public boolean Geral;
 
+    //Verifica distribuiçao atual
+    private boolean distrNormal;
+
+    //Streams
+    private int streamChegGeral;
+    private int streamChegEmpr;
+    private int streamServGeralGeral;
+    private int streamServGeralEmpr;
+    private int streamServEmprGeral;
+    private int streamServEmprEmpr;
+
     // Construtor
     public Simulador() {
         // Inicialização de parâmetros do simulador
         media_cheg_empresariais = 35;
         media_cheg_geral = 12;
         media_serv_empresariais = 23;
+        media_serv_empresariais_balcaoGeral =
         media_serv_geral = 25;
 
         n_clientes = 1000;
@@ -32,8 +45,13 @@ public class Simulador {
         servicoEmpresarial = new Servico(this, !Geral, 1);
         servicoGeral = new Servico(this, Geral, 2);
 
-        servicoEmpresarial.setAnotherOne(servicoGeral);
-        servicoGeral.setAnotherOne(servicoEmpresarial);
+        //Guarda em cada serviço o  outro
+        servicoEmpresarial.outroServico(servicoGeral);
+        servicoGeral.outroServico(servicoEmpresarial);
+
+        //Variaveis interface
+        distrNormal = true;
+
         // Criaçãoo da lista de eventos
         lista = new ListaEventos(this);
         // Agendamento da primeira chegada
@@ -118,6 +136,21 @@ public class Simulador {
         }
     }
 
+    public double getMediaServ(Cliente c, boolean balcaoGeral){
+        if(c.getTipo() == true){
+            if(balcaoGeral){
+                return media_serv_geral;
+            }
+            else return media_serv_geral_balcaoEmpresarial;
+        }
+        else{
+            if(balcaoGeral){
+                return media_serv_empresariais_balcaoGeral;
+            }
+            else return  media_serv_empresariais;
+        }
+    }
+
     public double getDp(boolean type){
         if(type == !Geral){
             return dp_empresarial;
@@ -131,4 +164,37 @@ public class Simulador {
         return servicoEmpresarial;
     }
 
+    //Este método devolve o tempo de serviço correto para um determinado cliente (c) num determinado balcao (balcaoGeral)
+    //Toma em conta também qual a distribuição selecionada
+    public double getTempo(Cliente c, boolean balcaoGeral){
+        if(c.getTipo() == true && balcaoGeral){
+            if(distrNormal){                //balcaoGeral apenas guarda true ou false, ou é ou não é
+                return getInstante() + Aleatorio.normal(getMediaServ(c, balcaoGeral), getDp(c.getTipo()), streamServGeralGeral);
+            }
+            else
+                return getInstante() + Aleatorio.exponencial(getMediaServ(c, balcaoGeral)); //balcaoGeral apenas guarda true ou false, ou é ou não é
+        }
+        else if(c.getTipo() == true && !balcaoGeral){
+            if(distrNormal){
+                return getInstante() + Aleatorio.normal(getMediaServ(c, balcaoGeral), getDp(c.getTipo()), streamServGeralEmpr);
+            }
+            else
+                return getInstante() + Aleatorio.exponencial(getMediaServ(c, balcaoGeral));
+        }
+
+        else if(c.getTipo() == false && balcaoGeral){
+            if(distrNormal){
+                return getInstante() + Aleatorio.normal(getMediaServ(c, balcaoGeral), getDp(c.getTipo()), streamServEmprGeral);
+            }
+            else
+                return getInstante() + Aleatorio.exponencial(getMediaServ(c, balcaoGeral));
+        }
+        else{
+            if(distrNormal){
+                return getInstante() + Aleatorio.normal(getMediaServ(c, balcaoGeral), getDp(c.getTipo()), streamServEmprEmpr);
+            }
+            else
+                return getInstante() + Aleatorio.exponencial(getMediaServ(c, balcaoGeral));
+        }
+    }
 }

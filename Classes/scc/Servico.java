@@ -12,7 +12,7 @@ public class Servico {
     private Simulador s; // Referência para o simulador a que pertence o serviço
     private int numEmpregados;
     private Cliente current;
-    private Servico anotherOne;
+    private Servico outroServico;
 
     // Construtor
     Servico(Simulador s, boolean type, int numEmpregados) {
@@ -29,35 +29,38 @@ public class Servico {
     // Método que insere cliente (c) no serviço
     public void insereServico(Cliente c) {
         if (estado < numEmpregados) { // Se serviço livre,
-            c.setEvento(new Saida(s.getInstante() + Aleatorio.normal(s.getMedia_serv(c.getTipo()), s.getDp(c.getTipo()), 50), s, c.getTipo()));
+            c.setEvento(new Saida(s.getTempo(c, c.getTipo()), s, c.getTipo()));
             current = c;
             estado++;     // fica ocupado e
             // agenda saída do cliente c para daqui a s.getMedia_serv() instantes
             s.insereEvento(c.getEvento());
         } else {
             //TRUE É GERAL
-            if (c.getTipo() == true && anotherOne.estado < anotherOne.numEmpregados) { //Quando o tipo é geral, e há espaço na empresarial
-                    anotherOne.estado++;
-                    c.setEvento(new Saida(s.getInstante() + Aleatorio.normal(s.getMedia_serv(false), s.getDp(false), 2), s, false));
-                    anotherOne.current = c;
+            if (c.getTipo() == true && outroServico.estado < outroServico.numEmpregados) { //Quando o tipo é geral, e há espaço na empresarial
+                    outroServico.estado++;
+                    c.setEvento(new Saida(s.getTempo(c, false), s, c.getTipo()));
+                    //c.setEvento(new Saida(s.getInstante() + Aleatorio.normal(s.getMedia_serv(false), s.getDp(false), 2), s, false));
+                    outroServico.current = c;
                     s.insereEvento(c.getEvento());
 
-            }else if(c.getTipo() == true && anotherOne.estado == anotherOne.numEmpregados) { //Quando o tipo é geral, e não há espaço na empresarial
+            }else if(c.getTipo() == true && outroServico.estado == outroServico.numEmpregados) { //Quando o tipo é geral, e não há espaço na empresarial
                     this.fila.add(c);
             }
 
             //TRUE É GERAL
             else if (c.getTipo() == false && s.getServicoEmpresarial().estado == 0) { //Quando o tipo é empresarial,está a voltar à fila empresarial e n tem gente
-                    s.insereEvento(new Saida(s.getInstante() + Aleatorio.normal(s.getMedia_serv(false), s.getDp(false), 3), s, c.getTipo()));
+                s.insereEvento(new Saida(s.getTempo(c, false), s, c.getTipo()));
+                //s.insereEvento(new Saida(s.getInstante() + Aleatorio.normal(s.getMedia_serv(false), s.getDp(false), 3), s, c.getTipo()));
 
             }else if (c.getTipo() == false && s.getServicoEmpresarial().estado != 0) { //Quando o tipo é empresarial,está a voltar e a fila está com gente
 
                 if (s.getServicoEmpresarial().current != null && s.getServicoEmpresarial().current.getTipo() == true) { //Caso em que interrompe a fila empresarial
                     s.removeEvento(s.getServicoEmpresarial().current.getEvento());
-                    anotherOne.fila.add(0, current);
+                    outroServico.fila.add(0, current);
                     this.current = c;
                     //JÁ TE DISSO QUE O TRUE ERA GERAL
-                    s.insereEvento(new Saida(s.getInstante() + Aleatorio.normal(s.getMedia_serv(c.getTipo()), s.getDp(c.getTipo()), 4), s, c.getTipo()));
+                    s.insereEvento(new Saida(s.getTempo(c, true), s, c.getTipo()));
+                    //s.insereEvento(new Saida(s.getInstante() + Aleatorio.normal(s.getMedia_serv(c.getTipo()), s.getDp(c.getTipo()), 4), s, c.getTipo()));
 
                 } else if (s.getServicoEmpresarial().current != null && s.getServicoEmpresarial().current.getTipo() == false) { //Caso em que n interrompe a fila empresarial
                     this.fila.add(c);
@@ -76,7 +79,8 @@ public class Servico {
             Cliente c = (Cliente) fila.firstElement();
             fila.removeElementAt(0);
             // agenda a sua saida para daqui a s.getMedia_serv() instantes
-            s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.getTipo()), s, c.getTipo()));
+            s.insereEvento(new Saida(s.getTempo(c, c.getTipo()), s, c.getTipo()));
+            //s.insereEvento(new Saida(s.getInstante() + s.getMedia_serv(c.getTipo()), s, c.getTipo()));
         }
     }
 
@@ -117,7 +121,7 @@ public class Servico {
         return atendidos;
     }
 
-    public void setAnotherOne(Servico anotherOne) {
-        this.anotherOne = anotherOne;
+    public void outroServico(Servico outroServico) {
+        this.outroServico = outroServico;
     }
 }
