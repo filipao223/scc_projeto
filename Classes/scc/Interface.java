@@ -238,6 +238,7 @@ public class Interface extends JFrame {
               //s.insereEvento(new Chegada(s.getInstante(), s, !s.Geral));
               //s.insereEvento(new Chegada(s.getInstante(), s, s.Geral));
               //s.printSimConfig();
+              updateValues.doClick();
               try{
                   ficheiroParametros.escreveParametros(s, thisGui);
               }catch(Exception ex){
