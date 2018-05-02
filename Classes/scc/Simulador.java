@@ -186,21 +186,6 @@ public class Simulador {
         }
     }
 
-    public double getMediaServ(Cliente c, boolean balcaoGeral){
-        if(c.getTipo() == true){
-            if(balcaoGeral){
-                return media_serv_geral;
-            }
-            else return media_serv_geral_balcaoEmpresarial;
-        }
-        else{
-            if(balcaoGeral){
-                return media_serv_empresariais_balcaoGeral;
-            }
-            else return  media_serv_empresariais;
-        }
-    }
-
     public double getDp(boolean type){
         if(type == !Geral){
             return dp_empresarial;
@@ -287,40 +272,6 @@ public class Simulador {
         }
     }
 
-    //Este método devolve o tempo de serviço correto para um determinado cliente (c) num determinado balcao (balcaoGeral)
-    //Toma em conta também qual a distribuição selecionada
-    public double getTempo(Cliente c, boolean balcaoGeral){
-        if(c.getTipo() == true && balcaoGeral){
-            if(distrNormal){                //balcaoGeral apenas guarda true ou false, ou é ou não é
-                return getInstante() + Aleatorio.normal(getMediaServ(c, balcaoGeral), getDp(c.getTipo()), streamServGeralGeral);
-            }
-            else
-                return getInstante() + Aleatorio.exponencial(getMediaServ(c, balcaoGeral)); //balcaoGeral apenas guarda true ou false, ou é ou não é
-        }
-        else if(c.getTipo() == true && !balcaoGeral){
-            if(distrNormal){
-                return getInstante() + Aleatorio.normal(getMediaServ(c, balcaoGeral), getDp(c.getTipo()), streamServGeralEmpr);
-            }
-            else
-                return getInstante() + Aleatorio.exponencial(getMediaServ(c, balcaoGeral));
-        }
-
-        else if(c.getTipo() == false && balcaoGeral){
-            if(distrNormal){
-                return getInstante() + Aleatorio.normal(getMediaServ(c, balcaoGeral), getDp(c.getTipo()), streamServEmprGeral);
-            }
-            else
-                return getInstante() + Aleatorio.exponencial(getMediaServ(c, balcaoGeral));
-        }
-        else{
-            if(distrNormal){
-                return getInstante() + Aleatorio.normal(getMediaServ(c, balcaoGeral), getDp(c.getTipo()), streamServEmprEmpr);
-            }
-            else
-                return getInstante() + Aleatorio.exponencial(getMediaServ(c, balcaoGeral));
-        }
-    }
-
     public void saveResultsString(){
         resultados = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(resultados);
@@ -329,12 +280,12 @@ public class Simulador {
         System.setOut(ps);
 
         System.out.println();
-        System.out.println("------- Resultados finais -------");
+        System.out.println("------- Resultados finais Empresarial -------");
         System.out.println();
         servicoEmpresarial.relat();
 
         System.out.println();
-        System.out.println("------- Resultados finais -------");
+        System.out.println("------- Resultados finais Geral -------");
         System.out.println();
         servicoGeral.relat();
 

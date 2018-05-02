@@ -180,6 +180,7 @@ public class Interface extends JFrame {
               //s.insereEvento(new Chegada(s.getInstante(), s, s.Geral));
               //s.printSimConfig();
               s.executa();
+
               Resultados result = new Resultados(s);
           }
       });
@@ -196,7 +197,7 @@ class Resultados extends JFrame{
         setTitle("Simulador SCC");
         setLocation(100, 100);
         setVisible(true);
-        setDefaultCloseOperation(3);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new FlowLayout());
 
         textArea = new JTextArea(); this.add(textArea);
