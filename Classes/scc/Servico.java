@@ -29,7 +29,7 @@ public class Servico {
     // Método que insere cliente (c) no serviço
     public void insereServico(Cliente c) {
         if (estado < numEmpregados) { // Se serviço livre,
-            c.setEvento(new Saida(s.getTempo(c, c.getTipo()), s, c.getTipo()));
+            c.setEvento(new Saida(s.getInstante() + s.getAleatoriadade(s.isDistrNormal(),s.getMedia_serv(c.getTipo()), s.getDp(c.getTipo()), s.getStream(c.getTipo(),c.getTipo())), s, c.getTipo()));
             current = c;
             estado++;     // fica ocupado e
             // agenda saída do cliente c para daqui a s.getMedia_serv() instantes
