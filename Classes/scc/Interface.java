@@ -15,10 +15,14 @@ public class Interface extends JFrame {
     private JLabel labelMediaChegGeral;
     private JLabel labelDPEmpre;
     private JLabel labelDPGeral;
+    private JLabel labelDPGeralEmpr;
+    private JLabel labelDPEmprGeral;
     private JTextField textMediaChegEmpr;
     private JTextField textMediaChegGeral;
     private JTextField textDPEmpre;
     private JTextField textDPGeral;
+    private JTextField textDPGeralEmpr;
+    private JTextField textDPEmprGeral;
     private JLabel labelServico;
     private JLabel labelMediaServGeralGeral;
     private JLabel labelMediaServGeralEmpr;
@@ -36,6 +40,7 @@ public class Interface extends JFrame {
     private JTextField textNumCliente;
     private JButton updateValues;
     private JButton startSimulacao;
+    private JButton defaultValues;
     private JComboBox distrComboBox;
     private JLabel LstreamInfo, LstreamChegGeral, LstreamChegEmpr, LstreamServGeralGeral, LstreamServGeralEmpr, LstreamServEmprGeral, LstreamServEmprEmpr;
     private JTextField TstreamInfo, TstreamChegGeral, TstreamChegEmpr, TstreamServGeralGeral, TstreamServGeralEmpr, TstreamServEmprGeral, TstreamServEmprEmpr;
@@ -70,10 +75,17 @@ public class Interface extends JFrame {
       textDPEmpre = new JTextField("4"); add(textDPEmpre);
       textDPEmpre.setPreferredSize(new Dimension(30, 20));
 
+      labelDPGeralEmpr = new JLabel("DP c.Geral b.Empr"); this.add(labelDPGeralEmpr);
+      textDPGeralEmpr = new JTextField("5"); this.add(textDPGeralEmpr);
+      textDPGeralEmpr.setPreferredSize(new Dimension(30,20));
+
+      labelDPEmprGeral = new JLabel("DP c.Empr b.Geral"); this.add(labelDPEmprGeral);
+      textDPEmprGeral = new JTextField("5"); this.add(textDPEmprGeral);
+      textDPEmprGeral.setPreferredSize(new Dimension(30,20));
+
 
 
       labelServico = new JLabel("Serviço:"); add(labelServico);
-      //labelServico.setBorder(new EmptyBorder(0,300,0,0));
 
       labelMediaServGeralGeral = new JLabel("Media c.Geral b.Geral"); add(labelMediaServGeralGeral);
       textMediaServGeralGeral = new JTextField("30"); add(textMediaServGeralGeral);
@@ -141,6 +153,32 @@ public class Interface extends JFrame {
           }
       });
 
+      defaultValues = new JButton("Default"); this.add(defaultValues);
+      defaultValues.addActionListener(new ActionListener() {
+          @Override
+          public void actionPerformed(ActionEvent e) {
+              s.updateMedia_cheg(true, 12); textMediaChegGeral.setText("12");
+              s.updateMedia_cheg(false, 35); textMediaChegEmpr.setText("35");
+              s.updateDP(true, true, 8); textDPGeral.setText("8");
+              s.updateDP(false, false, 4); textDPEmpre.setText("4");
+              s.updateDP(true, false, 5); textDPGeralEmpr.setText("5");
+              s.updateDP(false, true, 5); textDPEmprGeral.setText("5");
+              s.updateMedia_serv(true, true, 30); textMediaServGeralGeral.setText("30");
+              s.updateMedia_serv(true, false, 25); textMediaServGeralEmpr.setText("25");
+              s.updateMedia_serv(false, true, 23); textMediaServEmprGeral.setText("23");
+              s.updateMedia_serv(false, false, 20); textMediaServEmprEmpr.setText("20");
+              s.updateNumFunc(true, 2); textFuncGeral.setText("2");
+              s.updateNumFunc(false, 1); textFuncEmpr.setText("1");
+              s.updateClientes(1000); textNumCliente.setText("1000");
+              s.updateStreams(true, true, true, 1); TstreamChegGeral.setText("1");
+              s.updateStreams(true, false, true, 2); TstreamChegEmpr.setText("2");
+              s.updateStreams(false, true, true, 3); TstreamServGeralGeral.setText("3");
+              s.updateStreams(false, true, false, 4); TstreamServGeralEmpr.setText("4");
+              s.updateStreams(false, false, true, 5); TstreamServEmprGeral.setText("5");
+              s.updateStreams(false, false, false, 6); TstreamServEmprEmpr.setText("6");
+          }
+      });
+
       updateValues = new JButton("Update");
       add(updateValues);
       updateValues.addActionListener(new ActionListener() {
@@ -149,8 +187,10 @@ public class Interface extends JFrame {
               try {
                   s.updateMedia_cheg(true, Double.parseDouble(textMediaChegGeral.getText()));
                   s.updateMedia_cheg(false, Double.parseDouble(textMediaChegEmpr.getText()));
-                  s.updateDP(true, Double.parseDouble(textDPGeral.getText()));
-                  s.updateDP(false, Double.parseDouble(textDPEmpre.getText()));
+                  s.updateDP(true, true, Double.parseDouble(textDPGeral.getText()));
+                  s.updateDP(false, false, Double.parseDouble(textDPEmpre.getText()));
+                  s.updateDP(true, false, Double.parseDouble(textDPGeralEmpr.getText()));
+                  s.updateDP(false, true, Double.parseDouble(textDPEmprGeral.getText()));
                   s.updateMedia_serv(true, true, Double.parseDouble(textMediaServGeralGeral.getText()));
                   s.updateMedia_serv(true, false, Double.parseDouble(textMediaServGeralEmpr.getText()));
                   s.updateMedia_serv(false, true, Double.parseDouble(textMediaServEmprGeral.getText()));

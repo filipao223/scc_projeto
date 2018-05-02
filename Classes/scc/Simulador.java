@@ -39,10 +39,12 @@ public class Simulador {
         // Inicialização de parâmetros do simulador
         media_cheg_empresariais = 35;
         media_cheg_geral = 12;
-        media_serv_empresariais = 23;
+        media_serv_empresariais = 20;
         media_serv_empresariais_balcaoGeral = 23;
         media_serv_geral_balcaoEmpresarial = 25;
-        media_serv_geral = 25;
+        media_serv_geral = 30;
+        dp_geral = 8;
+        dp_empresarial = 4;
         dp_empresarial_balcaoGeral = 5;
         dp_geral_balcaoEmpresarial = 5;
 
@@ -210,12 +212,19 @@ public class Simulador {
         else this.media_cheg_empresariais = newValue;
     }
 
-    public void updateDP(boolean geral, double newValue){
-        if(geral){
-            this.dp_geral = newValue;
+    public void updateDP(boolean cGeral, boolean bGeral, double newValue){
+        if(cGeral){
+            if(bGeral)
+                this.dp_geral = newValue;
+            else
+                this.dp_geral_balcaoEmpresarial = newValue;
         }
-        else
-            this.dp_empresarial = newValue;
+        else{
+            if(bGeral)
+                this.dp_empresarial_balcaoGeral = newValue;
+            else
+                this.dp_empresarial = newValue;
+        }
     }
 
     public void updateMedia_serv(boolean geral, boolean balcaoGeral, double newValue){
