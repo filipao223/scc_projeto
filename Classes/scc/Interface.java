@@ -4,47 +4,52 @@ package scc;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 
 public class Interface extends JFrame {
 
-    private JLabel labelChegada;
-    private JLabel labelMediaChegEmpr;
-    private JLabel labelMediaChegGeral;
-    private JLabel labelDPEmpre;
-    private JLabel labelDPGeral;
-    private JLabel labelDPGeralEmpr;
-    private JLabel labelDPEmprGeral;
-    private JTextField textMediaChegEmpr;
-    private JTextField textMediaChegGeral;
-    private JTextField textDPEmpre;
-    private JTextField textDPGeral;
-    private JTextField textDPGeralEmpr;
-    private JTextField textDPEmprGeral;
-    private JLabel labelServico;
-    private JLabel labelMediaServGeralGeral;
-    private JLabel labelMediaServGeralEmpr;
-    private JLabel labelMediaServEmprGeral;
-    private JLabel labelMediaServEmprEmpr;
-    private JTextField textMediaServGeralGeral;
-    private JTextField textMediaServGeralEmpr;
-    private JTextField textMediaServEmprGeral;
-    private JTextField textMediaServEmprEmpr;
-    private JLabel labelFuncGeral;
-    private JLabel labelFuncEmpr;
-    private JTextField textFuncGeral;
-    private JTextField textFuncEmpr;
-    private JLabel labelNumCliente;
-    private JTextField textNumCliente;
-    private JButton updateValues;
-    private JButton startSimulacao;
-    private JButton defaultValues;
-    private JComboBox distrComboBox;
-    private JLabel LstreamInfo, LstreamChegGeral, LstreamChegEmpr, LstreamServGeralGeral, LstreamServGeralEmpr, LstreamServEmprGeral, LstreamServEmprEmpr;
-    private JTextField TstreamInfo, TstreamChegGeral, TstreamChegEmpr, TstreamServGeralGeral, TstreamServGeralEmpr, TstreamServEmprGeral, TstreamServEmprEmpr;
-    private JPanel jpanel1;
+    public JLabel labelChegada;
+    public JLabel labelMediaChegEmpr;
+    public JLabel labelMediaChegGeral;
+    public JLabel labelDPEmpre;
+    public JLabel labelDPGeral;
+    public JLabel labelDPGeralEmpr;
+    public JLabel labelDPEmprGeral;
+    public JTextField textMediaChegEmpr;
+    public JTextField textMediaChegGeral;
+    public JTextField textDPEmpre;
+    public JTextField textDPGeral;
+    public JTextField textDPGeralEmpr;
+    public JTextField textDPEmprGeral;
+    public JLabel labelServico;
+    public JLabel labelMediaServGeralGeral;
+    public JLabel labelMediaServGeralEmpr;
+    public JLabel labelMediaServEmprGeral;
+    public JLabel labelMediaServEmprEmpr;
+    public JTextField textMediaServGeralGeral;
+    public JTextField textMediaServGeralEmpr;
+    public JTextField textMediaServEmprGeral;
+    public JTextField textMediaServEmprEmpr;
+    public JLabel labelFuncGeral;
+    public JLabel labelFuncEmpr;
+    public JTextField textFuncGeral;
+    public JTextField textFuncEmpr;
+    public JLabel labelNumCliente;
+    public JTextField textNumCliente;
+    public JButton updateValues;
+    public JButton startSimulacao;
+    public JButton defaultValues;
+    public JComboBox distrComboBox;
+    public JLabel LstreamInfo, LstreamChegGeral, LstreamChegEmpr, LstreamServGeralGeral, LstreamServGeralEmpr, LstreamServEmprGeral, LstreamServEmprEmpr;
+    public JTextField TstreamInfo, TstreamChegGeral, TstreamChegEmpr, TstreamServGeralGeral, TstreamServGeralEmpr, TstreamServEmprGeral, TstreamServEmprEmpr;
+    public JPanel jpanel1;
+    FicheiroParametros ficheiroParametros;
+    final Interface thisGui;
 
   public Interface(Simulador s) {
       setPreferredSize(new Dimension(800, 350));
@@ -54,6 +59,14 @@ public class Interface extends JFrame {
       setDefaultCloseOperation(3);
 
       setLayout(new GridLayout(12, 0, 4, 4));
+
+      thisGui = this;
+
+      try{
+          ficheiroParametros = new FicheiroParametros("save.txt");
+      }catch(Exception ex){
+          System.out.println(ex);
+      }
 
       labelChegada = new JLabel("Chegada:"); add(labelChegada);
 
@@ -153,6 +166,12 @@ public class Interface extends JFrame {
           }
       });
 
+      try{
+          ficheiroParametros.leParametros(s, this);
+      }catch(Exception ex){
+          System.out.println(ex);
+      }
+
       defaultValues = new JButton("Default"); this.add(defaultValues);
       defaultValues.addActionListener(new ActionListener() {
           @Override
@@ -195,15 +214,15 @@ public class Interface extends JFrame {
                   s.updateMedia_serv(true, false, Double.parseDouble(textMediaServGeralEmpr.getText()));
                   s.updateMedia_serv(false, true, Double.parseDouble(textMediaServEmprGeral.getText()));
                   s.updateMedia_serv(false, false, Double.parseDouble(textMediaServEmprEmpr.getText()));
-                  s.updateNumFunc(true, Integer.parseInt(textFuncGeral.getText()));
-                  s.updateNumFunc(false, Integer.parseInt(textFuncEmpr.getText()));
-                  s.updateClientes(Integer.parseInt(textNumCliente.getText()));
-                  s.updateStreams(true, true, true, Integer.parseInt(TstreamChegGeral.getText()));
-                  s.updateStreams(true, false, true, Integer.parseInt(TstreamChegEmpr.getText()));
-                  s.updateStreams(false, true, true, Integer.parseInt(TstreamServGeralGeral.getText()));
-                  s.updateStreams(false, true, false, Integer.parseInt(TstreamServGeralEmpr.getText()));
-                  s.updateStreams(false, false, true, Integer.parseInt(TstreamServEmprGeral.getText()));
-                  s.updateStreams(false, false, false, Integer.parseInt(TstreamServEmprEmpr.getText()));
+                  s.updateNumFunc(true, Double.parseDouble(textFuncGeral.getText()));
+                  s.updateNumFunc(false, Double.parseDouble(textFuncEmpr.getText()));
+                  s.updateClientes(Double.parseDouble(textNumCliente.getText()));
+                  s.updateStreams(true, true, true, Double.parseDouble(TstreamChegGeral.getText()));
+                  s.updateStreams(true, false, true, Double.parseDouble(TstreamChegEmpr.getText()));
+                  s.updateStreams(false, true, true, Double.parseDouble(TstreamServGeralGeral.getText()));
+                  s.updateStreams(false, true, false, Double.parseDouble(TstreamServGeralEmpr.getText()));
+                  s.updateStreams(false, false, true, Double.parseDouble(TstreamServEmprGeral.getText()));
+                  s.updateStreams(false, false, false, Double.parseDouble(TstreamServEmprEmpr.getText()));
 
               } catch(Exception ex) {
                   JOptionPane.showMessageDialog(null, (new StringBuilder()).append("Erro: ").append(ex).toString(), "Error", 0);
@@ -219,6 +238,11 @@ public class Interface extends JFrame {
               //s.insereEvento(new Chegada(s.getInstante(), s, !s.Geral));
               //s.insereEvento(new Chegada(s.getInstante(), s, s.Geral));
               //s.printSimConfig();
+              try{
+                  ficheiroParametros.escreveParametros(s, thisGui);
+              }catch(Exception ex){
+                  System.out.println(ex);
+              }
               s.executa();
 
               Resultados result = new Resultados(s);
@@ -242,5 +266,86 @@ class Resultados extends JFrame{
 
         textArea = new JTextArea(); this.add(textArea);
         textArea.append(s.resultados.toString());
+    }
+}
+
+class FicheiroParametros{
+    File ficheiro;
+    BufferedReader reader;
+    BufferedWriter writer;
+
+    public FicheiroParametros(String src) throws IOException {
+        ficheiro = new File(src);
+        ficheiro.createNewFile(); //Se ja existir, nao faz nada
+    }
+
+    public void leParametros(Simulador s, Interface gui) throws IOException {
+        reader = new BufferedReader(new FileReader(ficheiro));
+        String text = null;
+        Double[] values = new Double[19];
+
+        int i=0;
+        while((text = reader.readLine()) != null){
+            values[i] = Double.parseDouble(text);
+            i+=1;
+        }
+
+        if(i != 19){
+            throw new IOException("Values.size() != 19");
+        }
+
+        System.out.println("LOADING CONFIGS");
+
+        s.updateMedia_cheg(true, values[0]); gui.textMediaChegGeral.setText(Double.toString(values[0]));
+        s.updateMedia_cheg(false, values[1]); gui.textMediaChegEmpr.setText(Double.toString(values[1]));
+        s.updateDP(true, true, values[2]); gui.textDPGeral.setText(Double.toString(values[2]));
+        s.updateDP(false, false, values[3]); gui.textDPEmpre.setText(Double.toString(values[3]));
+        s.updateDP(true, false, values[4]); gui.textDPGeralEmpr.setText(Double.toString(values[4]));
+        s.updateDP(false, true, values[5]); gui.textDPEmprGeral.setText(Double.toString(values[5]));
+        s.updateMedia_serv(true, true, values[6]); gui.textMediaServGeralGeral.setText(Double.toString(values[6]));
+        s.updateMedia_serv(true, false, values[7]); gui.textMediaServGeralEmpr.setText(Double.toString(values[7]));
+        s.updateMedia_serv(false, true, values[8]); gui.textMediaServEmprGeral.setText(Double.toString(values[8]));
+        s.updateMedia_serv(false, false, values[9]); gui.textMediaServEmprEmpr.setText(Double.toString(values[9]));
+        s.updateNumFunc(true, values[10]); gui.textFuncGeral.setText(Double.toString(values[10]));
+        s.updateNumFunc(false, values[11]); gui.textFuncEmpr.setText(Double.toString(values[11]));
+        s.updateClientes(values[12]); gui.textNumCliente.setText(Double.toString(values[12]));
+        s.updateStreams(true, true, true, values[13]); gui.TstreamChegGeral.setText(Double.toString(values[13]));
+        s.updateStreams(true, false, true, values[14]); gui.TstreamChegEmpr.setText(Double.toString(values[14]));
+        s.updateStreams(false, true, true, values[15]); gui.TstreamServGeralGeral.setText(Double.toString(values[15]));
+        s.updateStreams(false, true, false, values[16]); gui.TstreamServGeralEmpr.setText(Double.toString(values[16]));
+        s.updateStreams(false, false, true, values[17]); gui.TstreamServEmprGeral.setText(Double.toString(values[17]));
+        s.updateStreams(false, false, false, values[18]); gui.TstreamServEmprEmpr.setText(Double.toString(values[18]));
+    }
+
+    public void escreveParametros(Simulador s, Interface gui) throws IOException{
+        PrintWriter writerP = new PrintWriter(ficheiro);
+        writerP.print("");
+        writerP.close();
+
+        writer = new BufferedWriter(new PrintWriter(ficheiro));
+
+        System.out.println("SAVING CONFIGS");
+
+        writer.write(gui.textMediaChegGeral.getText()); writer.append("\n");
+        writer.append(gui.textMediaChegEmpr.getText()); writer.append("\n");
+        writer.append(gui.textDPGeral.getText()); writer.append("\n");
+        writer.append(gui.textDPEmpre.getText()); writer.append("\n");
+        writer.append(gui.textDPGeralEmpr.getText()); writer.append("\n");
+        writer.append(gui.textDPEmprGeral.getText()); writer.append("\n");
+        writer.append(gui.textMediaServGeralGeral.getText()); writer.append("\n");
+        writer.append(gui.textMediaServGeralEmpr.getText()); writer.append("\n");
+        writer.append(gui.textMediaServEmprGeral.getText()); writer.append("\n");
+        writer.append(gui.textMediaServEmprEmpr.getText()); writer.append("\n");
+        writer.append(gui.textFuncGeral.getText()); writer.append("\n");
+        writer.append(gui.textFuncEmpr.getText()); writer.append("\n");
+        writer.append(gui.textNumCliente.getText()); writer.append("\n");
+        writer.append(gui.TstreamChegGeral.getText()); writer.append("\n");
+        writer.append(gui.TstreamChegEmpr.getText()); writer.append("\n");
+        writer.append(gui.TstreamServGeralGeral.getText()); writer.append("\n");
+        writer.append(gui.TstreamServGeralEmpr.getText()); writer.append("\n");
+        writer.append(gui.TstreamServEmprGeral.getText()); writer.append("\n");
+        writer.append(gui.TstreamServEmprEmpr.getText()); writer.append("\n");
+
+        writer.close();
     }
 }

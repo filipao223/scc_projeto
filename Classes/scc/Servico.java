@@ -128,7 +128,7 @@ public class Servico {
         this.outroServico = outroServico;
     }
 
-    public void updateNumFunc(int num){
-        this.numEmpregados = num;
+    public void updateNumFunc(double num){
+        this.numEmpregados =(int) num;
     }
 }

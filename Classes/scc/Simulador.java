@@ -242,31 +242,31 @@ public class Simulador {
         }
     }
 
-    public void updateNumFunc(boolean balcaoGeral, int newValue){
+    public void updateNumFunc(boolean balcaoGeral, double newValue){
         if(balcaoGeral){
             servicoGeral.updateNumFunc(newValue);
         }
         else servicoEmpresarial.updateNumFunc(newValue);
     }
 
-    public void updateClientes(int newValue){
-        this.n_clientes = newValue;
+    public void updateClientes(double newValue){
+        this.n_clientes =(int) newValue;
     }
 
     public void updateDistr(boolean normal){
         this.distrNormal = normal;
     }
 
-    public void updateStreams(boolean cheg, boolean cGeral, boolean bGeral, int newValue){
+    public void updateStreams(boolean cheg, boolean cGeral, boolean bGeral, double newValue){
         if(cheg){
-            if(cGeral) this.streamChegGeral = newValue;
-            else this.streamChegEmpr = newValue;
+            if(cGeral) this.streamChegGeral =(int) newValue;
+            else this.streamChegEmpr =(int) newValue;
         }
         else{
-            if(cGeral && bGeral) this.streamServGeralGeral = newValue;
-            else if(cGeral && !bGeral) this.streamServGeralEmpr = newValue;
-            else if(!cGeral && bGeral) this.streamServEmprGeral = newValue;
-            else this.streamServEmprEmpr = newValue;
+            if(cGeral && bGeral) this.streamServGeralGeral =(int) newValue;
+            else if(cGeral && !bGeral) this.streamServGeralEmpr =(int) newValue;
+            else if(!cGeral && bGeral) this.streamServEmprGeral =(int) newValue;
+            else this.streamServEmprEmpr =(int) newValue;
         }
     }
 
