@@ -135,9 +135,9 @@ public class Interface extends JFrame {
           public void actionPerformed(ActionEvent e) {
               String distr = (String)distrComboBox.getSelectedItem();
               if(distr.equalsIgnoreCase("Normal"))
-                  s.updateDistr(false);
-              else
                   s.updateDistr(true);
+              else
+                  s.updateDistr(false);
           }
       });
 

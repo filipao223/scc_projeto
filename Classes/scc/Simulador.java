@@ -61,6 +61,14 @@ public class Simulador {
         //Variaveis interface
         distrNormal = true;
 
+        //Streams
+        streamChegGeral = 1;
+        streamChegEmpr = 2;
+        streamServGeralGeral = 3;
+        streamServGeralEmpr = 4;
+        streamServEmprGeral = 5;
+        streamServEmprEmpr = 6;
+
         Interface gui = new Interface(this);
 
         // Criaçãoo da lista de eventos
@@ -265,6 +273,17 @@ public class Simulador {
             else if(cGeral && !bGeral) this.streamServGeralEmpr = newValue;
             else if(!cGeral && bGeral) this.streamServEmprGeral = newValue;
             else this.streamServEmprEmpr = newValue;
+        }
+    }
+
+    public int getStream(boolean cGeral, boolean bGeral){
+        if(cGeral){
+            if(bGeral) return streamServGeralGeral;
+            else return streamServGeralEmpr;
+        }
+        else{
+            if(bGeral) return streamServEmprGeral;
+            else return streamServEmprEmpr;
         }
     }
 
